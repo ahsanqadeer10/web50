@@ -5,20 +5,40 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Image Search</title>
+		<link rel="stylesheet" href="css/styles.css" />
+		<link rel="stylesheet" href="fontawesome/css/all.css" />
 	</head>
 	<body>
-		<div style="text-align: right">
+		<header>
 			<a href="./index.html">Go back to Search</a>
-		</div>
-		<div style="text-align: center">
-			<h1>Image Search</h1>
-		</div>
+		</header>
 
-		<form style="text-align: center" action="https://google.com/search">
-			<div><input type="text" name="q" /></div>
-			<input type="text" name="sclient" value="img" hidden />
-			<input type="text" name="tbm" value="isch" hidden />
-			<input type="submit" value="Image Search" />
-		</form>
+		<main>
+			<h1>Image Search</h1>
+			<form id="search-form" action="https://google.com/search">
+				<div id="search-box">
+					<span><i class="fas fa-search"></i></span>
+					<input type="text" name="q" id="search-input" />
+					<span
+						style="
+							border-right: 0.5px solid gray;
+							padding-right: 10px;
+							margin-right: 10px;
+						"
+						id="times-icon"
+						><i class="fas fa-times"></i
+					></span>
+
+					<button type="submit" id="image-btn">
+						<span><i style="color: blue" class="fas fa-search"></i></span>
+					</button>
+				</div>
+				<input type="text" name="sclient" value="img" hidden />
+				<input type="text" name="tbm" value="isch" hidden />
+				<div></div>
+			</form>
+		</main>
+
+		<script src="js/script.js"></script>
 	</body>
 </html>
