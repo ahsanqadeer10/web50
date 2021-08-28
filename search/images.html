@@ -15,8 +15,8 @@
 
 		<main>
 			<h1>Image Search</h1>
-			<form id="search-form" action="https://google.com/search">
-				<div id="search-box">
+			<form action="https://google.com/search">
+				<div class="form-group">
 					<span><i class="fas fa-search"></i></span>
 					<input type="text" name="q" id="search-input" />
 					<span
@@ -29,13 +29,14 @@
 						><i class="fas fa-times"></i
 					></span>
 
-					<button type="submit" id="image-btn">
-						<span><i style="color: blue" class="fas fa-search"></i></span>
-					</button>
+					<div class="submit-group">
+						<button type="submit">
+							<span><i class="fas fa-search"></i></span>
+						</button>
+					</div>
 				</div>
 				<input type="text" name="sclient" value="img" hidden />
 				<input type="text" name="tbm" value="isch" hidden />
-				<div></div>
 			</form>
 		</main>
 

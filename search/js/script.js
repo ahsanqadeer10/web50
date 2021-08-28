@@ -18,4 +18,18 @@ searchInput.addEventListener("input", function () {
 timesIcon.addEventListener("click", function () {
 	searchInput.value = "";
 	searchInput.focus();
+	timesIcon.style.visibility = "hidden";
+});
+
+// Get form group
+var formGroup = document.getElementsByClassName("form-group").item(0);
+
+// Add box shadow when input focused
+searchInput.addEventListener("focus", function () {
+	formGroup.style.boxShadow = "0px 2px 4px 2px rgba(0, 0, 0, 0.1)";
+});
+
+// Remove box shadow when input out of focus
+searchInput.addEventListener("focusout", function () {
+	formGroup.style.boxShadow = "none";
 });

@@ -5,37 +5,18 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Advanced Search</title>
-
-		<style>
-			form {
-				width: 80%;
-			}
-
-			form > div {
-				display: flex;
-			}
-
-			label {
-				width: 20%;
-				min-width: 200px;
-			}
-
-			input[type="text"] {
-				width: 50%;
-			}
-
-			input {
-				margin-left: auto;
-				margin-right: 0;
-			}
-		</style>
+		<link rel="stylesheet" href="css/styles_advanced.css" />
 	</head>
 	<body>
-		<div style="text-align: right">
+		<header>
 			<a href="./index.html">Go back to Search</a>
-		</div>
-		<div>
+		</header>
+
+		<main>
 			<h1>Advanced Search</h1>
+			<hr />
+			<h4>Find pages with...</h4>
+			<!--
 			<form action="https://google.com/search">
 				<div>
 					<label for="all">all these words:</label>
@@ -61,6 +42,49 @@
 					<input type="submit" value="Advanced Search" />
 				</div>
 			</form>
-		</div>
+			-->
+
+			<form action="https://google.com/search">
+				<div class="form-group">
+					<div class="label-group">
+						<label for="all">all these words:</label>
+					</div>
+					<div class="input-group">
+						<input type="text" name="as_q" id="all" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="label-group">
+						<label for="exact">this exact word or phrase:</label>
+					</div>
+					<div class="input-group">
+						<input type="text" name="as_epq" id="exact" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="label-group">
+						<label for="any">any of these words:</label>
+					</div>
+					<div class="input-group">
+						<input type="text" name="as_oq" id="any" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="label-group">
+						<label for="none">none these words:</label>
+					</div>
+					<div class="input-group">
+						<input type="text" name="as_eq" id="none" />
+					</div>
+				</div>
+
+				<div>
+					<button type="submit">Advanced Search</button>
+				</div>
+			</form>
+		</main>
 	</body>
 </html>
