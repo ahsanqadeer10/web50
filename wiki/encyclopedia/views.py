@@ -1,10 +1,15 @@
 from django.forms.fields import CharField
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django import forms
 
 from . import util
 import markdown2
+
+
+class NewEntryForm(forms.Form):
+    title = forms.CharField(label="Title")
+    markdown = forms.CharField(label="Markdown", widget=forms.Textarea)
 
 
 def index(request):
@@ -25,7 +30,29 @@ def entry(request, title):
 
 
 def new(request):
-    return HttpResponse("Add entry page")
+    if request.method == "POST":
+        print("New entry form posted!")
+        form = NewEntryForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            markdown = form.cleaned_data["markdown"]
+            entry = util.get_entry(title)
+            if entry is None:
+                util.save_entry(title, markdown)
+                return redirect(f'wiki/{title}')
+            else:
+                return render(request, "encyclopedia/new.html", {
+                    "form": form,
+                    "error_msg": "An entry with the title already exists. Please write a different heading."
+                })
+        else:
+            return render(request, "encyclopedia/new.html", {
+                "form": form
+            })
+
+    return render(request, "encyclopedia/new.html", {
+        "form": NewEntryForm()
+    })
 
 
 def edit(request, title):
@@ -40,7 +67,7 @@ def search(request):
             entries = util.list_entries()
             search_results = []
             for item in entries:
-                if query in item:
+                if query.lower() in item.lower():
                     search_results.append(item)
             print(search_results)
             return render(request, "encyclopedia/search.html", {
