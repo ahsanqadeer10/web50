@@ -2,6 +2,7 @@ from django.forms.fields import CharField
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django import forms
+from pygments.lexer import default
 
 from . import util
 import markdown2
@@ -9,6 +10,10 @@ import markdown2
 
 class NewEntryForm(forms.Form):
     title = forms.CharField(label="Title")
+    markdown = forms.CharField(label="Markdown", widget=forms.Textarea)
+
+
+class EditEntryForm(forms.Form):
     markdown = forms.CharField(label="Markdown", widget=forms.Textarea)
 
 
@@ -24,7 +29,7 @@ def entry(request, title):
         return HttpResponse(f'The entry {title} does not exist.')
     else:
         return render(request, "encyclopedia/entry.html", {
-            "title": title.capitalize(),
+            "title": title,
             "entry": markdown2.markdown(entry)
         })
 
@@ -39,7 +44,7 @@ def new(request):
             entry = util.get_entry(title)
             if entry is None:
                 util.save_entry(title, markdown)
-                return redirect(f'wiki/{title}')
+                return redirect(f'/wiki/{title}')
             else:
                 return render(request, "encyclopedia/new.html", {
                     "form": form,
@@ -56,7 +61,30 @@ def new(request):
 
 
 def edit(request, title):
-    return HttpResponse(f"Edit {title} page")
+    if request.method == "POST":
+        print("Edit route hit.")
+        form = EditEntryForm(request.POST)
+        if form.is_valid():
+            print("Valid form")
+            markdown = form.cleaned_data["markdown"]
+            print(title)
+            util.save_entry(title, markdown)
+            print(title)
+            return redirect(f"/wiki/{title}")
+        else:
+            return render(request, "encyclopedia/edit.html", {
+                "title": title,
+                "form": form
+            })
+
+    entry = util.get_entry(title)
+    if entry is None:
+        return HttpResponse(f"The entry { title } does not exist.")
+    form = EditEntryForm(initial={'markdown': entry})
+    return render(request, "encyclopedia/edit.html", {
+        "title": title,
+        "form": form
+    })
 
 
 def search(request):
