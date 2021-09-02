@@ -6,6 +6,7 @@ from pygments.lexer import default
 
 from . import util
 import markdown2
+import random
 
 
 class NewEntryForm(forms.Form):
@@ -107,3 +108,8 @@ def search(request):
                 "title": query.capitalize(),
                 "entry": markdown2.markdown(entry)
             })
+
+
+def randompage(request):
+    randomentry = random.choice(util.list_entries())
+    return redirect(f"/wiki/{randomentry}")

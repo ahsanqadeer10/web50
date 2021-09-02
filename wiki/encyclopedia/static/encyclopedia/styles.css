@@ -1,38 +1,99 @@
 body {
-    margin: 0;
-    background-color: white;
+	background-color: white;
+	font-family: "Merriweather", sans-serif;
 }
 
-code {
-    white-space: pre;
+.wrapper {
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+	grid-auto-rows: 100vh;
+	grid-column-gap: 1em;
 }
 
-h1 {
-    margin-top: 0px;
-    padding-top: 20px;
-}
-
-textarea {
-    height: 90vh;
-    width: 80%;
-}
-
-.main {
-    padding: 10px;
-}
-
-.search {
-    width: 100%;
-    font-size: 15px;
-    line-height: 15px;
+.wrapper > div {
+	padding: 20px 10px;
 }
 
 .sidebar {
-    background-color: #f0f0f0;
-    height: 100vh;
-    padding: 20px;
+	background-color: #f0f0f0;
+}
+
+code {
+	white-space: pre;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	padding: 10px 0px;
+}
+
+.entry-list {
+	background-color: #f0f0f0;
+	list-style: none;
+	padding: 20px;
+	width: 50%;
+}
+
+.links-list {
+	list-style: none;
+	padding: 20px 0px;
+}
+
+li a {
+	color: black;
+}
+
+li a:hover {
+	color: rgba(0, 0, 0, 0.5);
+	text-decoration: none;
+}
+
+.search {
+	font-size: 15px;
+	line-height: 15px;
+	width: 100%;
+	padding: 5px;
 }
 
 .sidebar h2 {
-    margin-top: 5px;
+	margin-top: 5px;
+}
+
+.main form {
+	padding: 20px;
+	background-color: #f0f0f0;
+	width: 75%;
+}
+
+form p > * {
+	display: block;
+}
+
+form p > input,
+textarea {
+	width: 100%;
+	padding: 10px;
+}
+
+textarea {
+	height: 50vh;
+}
+
+@media only screen and (max-width: 768px) {
+	.wrapper {
+		grid-template-columns: none;
+		grid-auto-rows: auto;
+		grid-column-gap: none;
+		grid-row-gap: 1em;
+	}
+
+	.main form {
+		padding: 20px;
+		background-color: #f0f0f0;
+		width: 100%;
+	}
 }

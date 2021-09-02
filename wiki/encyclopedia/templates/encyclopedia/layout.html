@@ -11,29 +11,43 @@
 			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 			crossorigin="anonymous"
 		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&display=swap"
+			rel="stylesheet"
+		/>
 		<link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet" />
 	</head>
 	<body>
-		<div class="row">
-			<div class="sidebar col-lg-2 col-md-3">
-				<h2>Wiki</h2>
-				<form action="{% url 'encyclopedia:search' %}" method="POST">
-					<input
-						class="search"
-						type="text"
-						name="q"
-						placeholder="Search Encyclopedia"
-					/>
-					{% csrf_token %}
-				</form>
+		<div class="wrapper">
+			<div class="sidebar">
+				<div><h2>Wiki</h2></div>
 				<div>
-					<a href="{% url 'encyclopedia:index' %}">Home</a>
+					<form action="{% url 'encyclopedia:search' %}" method="POST">
+						<div>
+							<input
+								class="search"
+								type="text"
+								name="q"
+								placeholder="Search Encyclopedia"
+							/>
+						</div>
+						{% csrf_token %}
+					</form>
 				</div>
-				<div><a href="{% url 'encyclopedia:new' %}">Create New Page</a></div>
-				<div>Random Page</div>
+				<div>
+					<ul class="links-list">
+						<li><a href="{% url 'encyclopedia:index' %}">Home</a></li>
+						<li><a href="{% url 'encyclopedia:new' %}">Create New Page</a></li>
+						<li>
+							<a href="{% url 'encyclopedia:randompage' %}">Random Page</a>
+						</li>
+					</ul>
+				</div>
 				{% block nav %} {% endblock %}
 			</div>
-			<div class="main col-lg-10 col-md-9">{% block body %} {% endblock %}</div>
+			<div class="main">{% block body %} {% endblock %}</div>
 		</div>
 	</body>
 </html>

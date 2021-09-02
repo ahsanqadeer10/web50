@@ -2,7 +2,7 @@
 {%endblock%} {%block body%}
 <h1>Edit page</h1>
 <form action="{% url 'encyclopedia:edit' title %}" method="POST">
-	{{ form }} {% csrf_token %}
-	<input type="submit" value="Save Changes" />
+	{{ form.as_p }} {% csrf_token %}
+	<input type="submit" value="Save Changes" class="btn btn-success" />
 </form>
 {%endblock%}
