@@ -1,0 +1,6 @@
+{% extends "auctions/layout.html" %} {% block title %}{{listing.title}}
+{%endblock %} {%block body%}
+<img src="{{listing.image}}" width="400px" />
+<h2>{{listing.title}} @ {{listing.starting_bid}}</h2>
+<p>{{listing.description}}</p>
+{%endblock%}
