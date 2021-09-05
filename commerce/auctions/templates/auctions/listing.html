@@ -1,6 +1,20 @@
 {% extends "auctions/layout.html" %} {% block title %}{{listing.title}}
 {%endblock %} {%block body%}
-<img src="{{listing.image}}" width="400px" />
-<h2>{{listing.title}} @ {{listing.starting_bid}}</h2>
-<p>{{listing.description}}</p>
+<div>
+	<img src="{{listing.image}}" width="400px" />
+	<h2>{{listing.title}} @ {{listing.starting_bid}}</h2>
+	<p>{{listing.description}}</p>
+</div>
+<div>
+	{% if listing.creator == request.user %}
+	<p>My creator!</p>
+	{% elif listing not in user_watchlist %}
+	<p>Not in watchlist.</p>
+	<a href="{% url 'watch' listing.id %}">Add to Watchlist.</a>
+	{% elif listing in user_watchlist %}
+	<p>In watchlist.</p>
+	<a href="{% url 'unwatch' listing.id %}">Remove from Watchlist.</a>
+	<p>{% endif %}</p>
+</div>
+
 {%endblock%}

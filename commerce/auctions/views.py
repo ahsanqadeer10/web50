@@ -90,6 +90,22 @@ def create(request):
 
 def listing(request, listing_id):
     listing = Listing.objects.get(pk=listing_id)
+    user_watchlist = None
+    if request.user.is_authenticated:
+        user_watchlist = request.user.watchlist.all()
     return render(request, "auctions/listing.html", {
-        "listing": listing
+        "listing": listing,
+        "user_watchlist": user_watchlist
     })
+
+
+def watch(request, listing_id):
+    listing = Listing.objects.get(pk=listing_id)
+    request.user.watchlist.add(listing)
+    return HttpResponseRedirect(reverse('listing', args=(listing_id, )))
+
+
+def unwatch(request, listing_id):
+    listing = Listing.objects.get(pk=listing_id)
+    request.user.watchlist.remove(listing)
+    return HttpResponseRedirect(reverse('listing', args=(listing_id, )))
