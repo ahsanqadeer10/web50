@@ -1,13 +1,47 @@
 {% extends "auctions/layout.html" %} {% block title %}{{listing.title}}
-{%endblock %} {%block body%}
+{%endblock %} {%block body%} {% if message %}
+<div>{{ message }}</div>
+{% endif %}
+
 <div>
+	<!-- Listing details -->
 	<img src="{{listing.image}}" width="400px" />
 	<h2>{{listing.title}} @ {{listing.starting_bid}}</h2>
 	<p>{{listing.description}}</p>
 </div>
 <div>
+	<!-- Show highest bid, a message if there have been no bids, and message if listing is closed. -->
+	{% if not listing.active %}
+	<h4>Listing closed at: {{listing.highest_bid}}</h4>
+	{% elif listing.highest_bid %}
+	<h4>Highest Bid: {{listing.highest_bid}}</h4>
+	{% else %}
+	<h4>No bids yet!</h4>
+	{% endif %}
+</div>
+{% if user.is_authenticated %}
+<div>
+	<!-- If user is not creator, show option to bid. If user is creator, show option to close. -->
+	{% if not listing.active and listing.winner == request.user %}
+	<p>Listing is closed. You have won the listing!</p>
+	{% elif not listing.active %}
+	<p>Listing is closed. No more bids can be placed.</p>
+	{% elif listing.creator == request.user %}
+	<a href="{% url 'close' listing.id %}">Close Listing</a>
+	{% else %}
+	<p>Option to bid</p>
+	<form action="{% url 'bid' listing.id %}" method="POST">
+		{% csrf_token %}
+		<input type="number" name="value" placeholder="Enter Bid Value" />
+		<input type="submit" value="Place Bid" />
+	</form>
+	{% endif %}
+</div>
+{% endif %} {% if user.is_authenticated and listing.active %}
+<div>
+	<!-- If the user is not creator, show watchlist options add and remove. -->
 	{% if listing.creator == request.user %}
-	<p>My creator!</p>
+	<p>Creator cannot add their listing to watchlist.</p>
 	{% elif listing not in user_watchlist %}
 	<p>Not in watchlist.</p>
 	<a href="{% url 'watch' listing.id %}">Add to Watchlist.</a>
@@ -16,5 +50,4 @@
 	<a href="{% url 'unwatch' listing.id %}">Remove from Watchlist.</a>
 	<p>{% endif %}</p>
 </div>
-
-{%endblock%}
+{% endif %} {%endblock%}
