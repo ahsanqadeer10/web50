@@ -80,6 +80,7 @@
 	<div class="listing-comments">
 		<div><h5>Comments</h5></div>
 		
+		<!--Add comment if user is logged in-->
 		{%if user.is_authenticated%}
 		<div>
 			<form action="{% url "comment" listing.id%}" method="POST">
@@ -94,12 +95,16 @@
 		</div>
 		{%endif%}
 		
+		<!--List of comments, option to delete for comment author-->
 		<div>
 			{%for comment in comments%}
 			<div class="comment">
 				<div><strong>@{{comment.author}}:</strong></div>
 				<div>{{comment.text}}</div>
 				<div style="font-size: 0.8em; margin-top: 10px">{{comment.date_created.time}} {{comment.date_created.date}}</div>
+				{%if user.is_authenticated and request.user == comment.author%}
+				<div><a href="{% url 'comment_delete' listing.id comment.id %}" class="btn btn-sm btn-danger" style="font-size: 0.8em; margin: 10px 0;">Delete</a></div>
+				{%endif%}
 			</div>
 			{%empty%}
 			No comments.

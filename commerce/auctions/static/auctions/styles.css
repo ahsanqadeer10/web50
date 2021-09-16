@@ -109,7 +109,10 @@ main {
 #listing-view .listing-comments .comment {
 	margin: 5px 0;
 	padding: 10px;
-	background-color: rgba(0, 0, 0, 0.1);
+	background-color: rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.05);
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.05);
 	font-size: 1.1em;
 	border-radius: 5px;
 }

@@ -283,6 +283,23 @@ def comment(request, listing_id):
 
 
 @login_required(login_url='/login')
+def comment_delete(request, listing_id, comment_id):
+    try:
+        comment = Comment.objects.get(pk=comment_id)
+    except Exception:
+        return HttpResponse("Could not find comment.")
+
+    if request.user != comment.author:
+        return HttpResponse("Could not delete comment.")
+
+    try:
+        comment.delete()
+        return HttpResponseRedirect(reverse("listing", args={listing_id: listing_id}))
+    except Exception:
+        return HttpResponse("Could not delete comment.")
+
+
+@login_required(login_url='/login')
 def watchlist(request):
     user = get_user(request)
     return render(request, "auctions/watchlist.html", {
