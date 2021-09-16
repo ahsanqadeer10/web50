@@ -1,8 +1,8 @@
-{% extends "auctions/layout.html" %} {% block body %}
-<h5>Active Listings</h5>
+{%extends "auctions/layout.html"%} {%block title%}{{category.name}}{%endblock%}
+{%block body%}
+<h5>Active Listings from {{category.name}}</h5>
 <div id="listing-grid">
 	{%for listing in listings%}
-
 	<div class="card">
 		{%if listing.image%}
 		<div class="card-image">
@@ -28,11 +28,11 @@
 			<div><strong>Highest Bid:</strong> {{listing.highest_bid}}</div>
 			{%else%}
 			<div><strong>No bids yet!</strong></div>
-			{% endif %}
+			{%endif%}
 		</div>
 	</div>
 
 	{%empty%}
-	<div>No listings added :(</div>
+	<div>No listings from this category.</div>
 </div>
-{%endfor%} {% endblock %}
+{%endfor%} {%endblock%}

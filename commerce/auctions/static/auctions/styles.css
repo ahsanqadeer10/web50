@@ -1,3 +1,190 @@
 body {
-    padding: 10px;
+	font-family: "Rubik", sans-serif;
+	font-weight: 300;
+	background-color: rgb(233, 236, 239);
+	font-size: 0.8em;
+}
+
+header {
+	padding: 20px;
+}
+
+navbar {
+	display: flex;
+}
+
+navbar ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+navbar ul li {
+	display: inline-flex;
+}
+
+navbar ul li a {
+	border: 2px solid rgba(158, 42, 43, 0.5);
+	font-weight: 500;
+	padding: 5px 10px;
+}
+
+navbar ul li a:hover {
+	border: 2px solid rgba(158, 42, 43, 1);
+	color: black;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+main {
+	padding: 20px 50px;
+}
+
+#listing-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 40px;
+}
+
+#listing-grid .card {
+	background-color: rgb(233, 236, 239);
+	-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+	width: 20%;
+	min-width: 200px;
+}
+
+#listing-grid .card > div {
+	margin: 10px;
+	padding: 10px;
+}
+
+#listing-grid .card .card-image img {
+	max-height: 250px;
+}
+
+#listing-view {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 20px;
+	gap: 20px;
+}
+
+#listing-view > div {
+	padding: 10px;
+}
+
+#listing-view .listing-image {
+	width: 30%;
+	min-width: 200px;
+}
+
+#listing-view .listing-image img {
+	width: 100%;
+}
+
+#listing-view .listing-info {
+	line-height: 2em;
+}
+
+#listing-view .listing-comments {
+	width: 100%;
+}
+
+#listing-view .listing-comments > div {
+	width: 60%;
+	min-width: 280px;
+	margin: 10px 0;
+}
+
+#listing-view .listing-comments input {
+	width: 100%;
+	padding: 5px;
+}
+
+#listing-view .listing-comments .comment {
+	margin: 5px 0;
+	padding: 10px;
+	background-color: rgba(0, 0, 0, 0.1);
+	font-size: 1.1em;
+	border-radius: 5px;
+}
+
+.form-view form div {
+	padding: 5px 0px;
+	width: 60%;
+}
+
+.form-view form div input {
+	width: 100%;
+	min-width: 300px;
+	padding: 5px;
+}
+
+.alert-message {
+	padding: 5px 10px;
+	border-radius: 4px;
+	color: white;
+	font-weight: 500;
+	margin: 5px 0px;
+	border: none;
+	-webkit-box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.5);
+	box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.error-alert {
+	background-color: rgba(180, 30, 30, 0.8);
+}
+
+.success-alert {
+	background-color: rgba(28, 122, 60, 0.8);
+}
+
+.watchlist-card {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 15px 0;
+	width: 60%;
+	min-width: 300px;
+
+	-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.watchlist-card > div {
+	height: 200px;
+	padding: 10px;
+}
+
+.watchlist-card .card-image img {
+	height: 100%;
+}
+
+.watchlist-card .card-info {
+	min-width: 300px;
+}
+
+.category-card {
+	-webkit-box-shadow: 1px 1px 1px 1px rgba(158, 42, 43, 0.5);
+	-moz-box-shadow: 1px 1px 1px 1px rgba(158, 42, 43, 0.5);
+	box-shadow: 1px 1px 1px 1px rgba(158, 42, 43, 0.5);
+	background-color: rgba(158, 42, 43, 0.9);
+	color: white;
+	font-size: 1.5em;
+	font-weight: 500;
+	padding: 20px 40px;
+	min-width: fit-content;
+	width: 200px;
+	text-align: center;
+}
+
+.category-card:hover {
+	background-color: rgba(158, 42, 43, 1);
 }

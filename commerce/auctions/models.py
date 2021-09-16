@@ -1,7 +1,11 @@
 from django.contrib.auth.models import AbstractUser
+from django.db.models import constants
+from django.db.models import constraints
 from django.db.models.deletion import CASCADE, PROTECT
 from django.db.models.fields.related import ForeignKey
 from django.db import models
+from django.db.models.constraints import UniqueConstraint
+from django.db.models.query_utils import Q
 
 
 class User(AbstractUser):
@@ -32,9 +36,22 @@ class Listing(models.Model):
     active = models.BooleanField(default=True)
     winner = models.ForeignKey(
         User, on_delete=PROTECT, related_name="wins", null=True, blank=True, default=None)
+    date_created = models.DateTimeField(editable=False, auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    text = models.CharField(max_length=250)
+    date_created = models.DateTimeField(editable=False, auto_now_add=True)
+    author = models.ForeignKey(
+        User, on_delete=CASCADE, related_name="comments")
+    listing = models.ForeignKey(
+        Listing, on_delete=CASCADE, related_name="comments")
+
+    def __str__(self):
+        return self.text
 
 
 class Bid(models.Model):

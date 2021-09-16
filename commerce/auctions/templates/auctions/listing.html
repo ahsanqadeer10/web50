@@ -1,53 +1,206 @@
 {% extends "auctions/layout.html" %} {% block title %}{{listing.title}}
-{%endblock %} {%block body%} {% if message %}
-<div>{{ message }}</div>
-{% endif %}
+{%endblock %} 
 
-<div>
-	<!-- Listing details -->
-	<img src="{{listing.image}}" width="400px" />
-	<h2>{{listing.title}} @ {{listing.starting_bid}}</h2>
-	<p>{{listing.description}}</p>
+{%block body%}
+<div id="listing-view">
+	{%if listing.image%}
+	<div class="listing-image">
+		<img src="{{listing.image}}" width="400px" />
+	</div>
+	{%endif%}
+
+
+	<div>
+	<div><h3>{{listing.title}}</h3></div>
+		<hr style="color: rgba(158, 42, 43, 1)" size="5" />
+		<div>{{listing.date_created.date}} - {{listing.date_created.time}}</div>
+		<div><strong>Description: </strong>{{listing.description}}</div>
+		<div><strong>Starting Bid: </strong>{{listing.starting_bid}}</div>
+
+		<div>
+			<!-- Show highest bid, a message if there have been no bids, and message if listing is closed. -->
+			{%if listing.active and listing.highest_bid%}
+			<strong>Highest Bid: </strong>{{listing.highest_bid}}
+			{%elif listing.active%}
+			<strong>No bids yet.</strong>
+			{%else%}
+			<strong>Listing Closed: </strong>{{listing.highest_bid}}
+			{%endif%}		
+		</div>
+
+		<div>
+			<!-- If user is not creator, show option to bid. If user is creator, show option to close. -->
+			{% if not listing.active and listing.winner == request.user %}
+			<strong>Listing is closed. You have won the listing!</strong>
+			{% elif not listing.active %}
+			<strong>Listing is closed. No more bids can be placed.</strong>
+			{% elif listing.creator == request.user %}
+			<a
+				class="btn btn-sm btn-warning"
+				style="margin: 10px 0"
+				href="{% url 'close' listing.id %}"
+				>Close Listing</a
+			>
+			{% else %}
+			<form action="{% url 'bid' listing.id %}" method="POST">
+				{% csrf_token %}
+				<input type="number" name="value" placeholder="Enter Bid Value" />
+				<input class="btn btn-sm btn-primary" type="submit" value="Place Bid" />
+			</form>
+			{% endif %}
+		</div>
+
+		{%if user.is_authenticated%}
+		<div>
+		<!-- Show watchlist options add and remove. -->
+			{% if listing not in watchlist %}
+			<a
+				class="btn btn-sm btn-success"
+				style="margin: 10px 0"
+				href="{% url 'watch' listing.id %}"
+				>Add to Watchlist.</a
+			>
+			{% elif listing in watchlist %}
+			<a
+				class="btn btn-sm btn-danger"
+				style="margin: 10px 0"
+				href="{% url 'unwatch' listing.id %}"
+				>Remove from Watchlist.</a
+			>
+			{%endif%}
+		</div>
+		{%endif%}
+	</div>
+
+	<div class="listing-comments">
+		<div><h5>Comments</h5></div>
+		
+		{%if user.is_authenticated%}
+		<div>
+			<form action="{% url "comment" listing.id%}" method="POST">
+			{% csrf_token %}
+				<input
+					type="text"
+					name="comment-text"
+					placeholder="Enter your comment here"
+				/>
+				<button type="submit" class="btn btn-sm btn-primary" style="margin: 10px 0">Submit</button>
+			</form>
+		</div>
+		{%endif%}
+		
+		<div>
+			{%for comment in comments%}
+			<div class="comment">
+				<div><strong>@{{comment.author}}:</strong></div>
+				<div>{{comment.text}}</div>
+				<div style="font-size: 0.8em; margin-top: 10px">{{comment.date_created.time}} {{comment.date_created.date}}</div>
+			</div>
+			{%empty%}
+			No comments.
+			{%endfor%}
+		</div>
+	</div>
 </div>
-<div>
-	<!-- Show highest bid, a message if there have been no bids, and message if listing is closed. -->
-	{% if not listing.active %}
-	<h4>Listing closed at: {{listing.highest_bid}}</h4>
-	{% elif listing.highest_bid %}
-	<h4>Highest Bid: {{listing.highest_bid}}</h4>
-	{% else %}
-	<h4>No bids yet!</h4>
-	{% endif %}
+
+
+{%endblock%}
+
+
+{% comment %} {%block body%} {% for alert_message in alert_messages %}
+<div class="alert-message {{alert_message.type}}">{{alert_message.text}}</div>
+{% empty %} {% endfor %}
+
+<div id="listing-view">
+	{%if listing.image%}
+	<div class="listing-image">
+		<img src="{{listing.image}}" width="400px" />
+	</div>
+	{%endif%}
+	<div class="listing-info">
+		<div><h3>{{listing.title}}</h3></div>
+		<hr style="color: rgba(158, 42, 43, 1)" size="5" />
+		<div>{{listing.date_created.date}} - {{listing.date_created.time}}</div>
+		<div><strong>Description: </strong>{{listing.description}}</div>
+		<div><strong>Starting Bid: </strong>{{listing.starting_bid}}</div>
+		<div>
+			<!-- Show highest bid, a message if there have been no bids, and message if listing is closed. -->
+			{%if listing.active%} {%if listing.highest_bid%}
+			<strong>Highest Bid: </strong>{{listing.highest_bid}} {%else%}
+			<strong>No bids yet.</strong> {%endif%} {%else%}
+			<strong>Listing Closed: </strong>{{listing.highest_bid}}{%endif%}
+		</div>
+
+		{% if user.is_authenticated %}
+		<div>
+			<!-- If user is not creator, show option to bid. If user is creator, show option to close. -->
+			{% if not listing.active and listing.winner == request.user %}
+			<strong>Listing is closed. You have won the listing!</strong>
+			{% elif not listing.active %}
+			<strong>Listing is closed. No more bids can be placed.</strong>
+			{% elif listing.creator == request.user %}
+			<a
+				class="btn btn-sm btn-warning"
+				style="margin: 10px 0"
+				href="{% url 'close' listing.id %}"
+				>Close Listing</a
+			>
+			{% else %}
+			<form action="{% url 'bid' listing.id %}" method="POST">
+				{% csrf_token %}
+				<input type="number" name="value" placeholder="Enter Bid Value" />
+				<input class="btn btn-sm btn-primary" type="submit" value="Place Bid" />
+			</form>
+			{% endif %}
+		</div>
+		{% endif %} {% if user.is_authenticated and listing.active %}
+		<div>
+			<!-- If the user is not creator, show watchlist options add and remove. -->
+			{% if listing not in watchlist %}
+			<a
+				class="btn btn-sm btn-success"
+				style="margin: 10px 0"
+				href="{% url 'watch' listing.id %}"
+				>Add to Watchlist.</a
+			>
+			{% elif listing in watchlist %}
+			<a
+				class="btn btn-sm btn-danger"
+				style="margin: 10px 0"
+				href="{% url 'unwatch' listing.id %}"
+				>Remove from Watchlist.</a
+			>
+			{%endif%}
+		</div>
+	</div>
+	{%endif%}
+	</div>
+	<div class="listing-comments">
+		<div><h5>Comments</h5></div>
+		{%if user.is_authenticated%}
+		<div>
+			<form action="{% url "comment" listing.id%}" method="POST">
+			{% csrf_token %}
+				<input
+					type="text"
+					name="comment-text"
+					placeholder="Enter your comment here"
+				/>
+				<button type="submit" class="btn btn-sm btn-primary" style="margin: 10px 0">Submit</button>
+			</form>
+		</div>
+		{%endif%}
+		<div>
+			{%for comment in comments%}
+			<div class="comment">
+			<div><strong>@{{comment.author}}:</strong></div>
+			<div>{{comment.text}}</div>
+			<div style="font-size: 0.8em; margin-top: 10px">{{comment.date_created.time}} {{comment.date_created.date}}</div>
+			</div>
+			{%empty%}
+			No comments.
+			{%endfor%}
+		</div>
+
 </div>
-{% if user.is_authenticated %}
-<div>
-	<!-- If user is not creator, show option to bid. If user is creator, show option to close. -->
-	{% if not listing.active and listing.winner == request.user %}
-	<p>Listing is closed. You have won the listing!</p>
-	{% elif not listing.active %}
-	<p>Listing is closed. No more bids can be placed.</p>
-	{% elif listing.creator == request.user %}
-	<a href="{% url 'close' listing.id %}">Close Listing</a>
-	{% else %}
-	<p>Option to bid</p>
-	<form action="{% url 'bid' listing.id %}" method="POST">
-		{% csrf_token %}
-		<input type="number" name="value" placeholder="Enter Bid Value" />
-		<input type="submit" value="Place Bid" />
-	</form>
-	{% endif %}
-</div>
-{% endif %} {% if user.is_authenticated and listing.active %}
-<div>
-	<!-- If the user is not creator, show watchlist options add and remove. -->
-	{% if listing.creator == request.user %}
-	<p>Creator cannot add their listing to watchlist.</p>
-	{% elif listing not in user_watchlist %}
-	<p>Not in watchlist.</p>
-	<a href="{% url 'watch' listing.id %}">Add to Watchlist.</a>
-	{% elif listing in user_watchlist %}
-	<p>In watchlist.</p>
-	<a href="{% url 'unwatch' listing.id %}">Remove from Watchlist.</a>
-	<p>{% endif %}</p>
-</div>
-{% endif %} {%endblock%}
+		{%endblock%} {% endcomment %}
