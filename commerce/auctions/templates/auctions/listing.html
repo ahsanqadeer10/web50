@@ -1,7 +1,12 @@
 {% extends "auctions/layout.html" %} {% block title %}{{listing.title}}
-{%endblock %} 
+{%endblock %}
 
 {%block body%}
+
+{% for alert_message in alert_messages %}
+<div class="alert-message {{alert_message.type}}">{{alert_message.text}}</div>
+{% empty %} {% endfor %}
+
 <div id="listing-view">
 	{%if listing.image%}
 	<div class="listing-image">
@@ -107,9 +112,8 @@
 {%endblock%}
 
 
-{% comment %} {%block body%} {% for alert_message in alert_messages %}
-<div class="alert-message {{alert_message.type}}">{{alert_message.text}}</div>
-{% empty %} {% endfor %}
+{% comment %} {%block body%} 
+
 
 <div id="listing-view">
 	{%if listing.image%}

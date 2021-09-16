@@ -113,7 +113,9 @@ def create(request):
 def listing(request, listing_id):
     try:
         listing = Listing.objects.get(pk=listing_id)
-        comments = listing.comments.all()
+        comments = Comment.objects.filter(
+            listing=listing).order_by("-date_created")
+
     except Exception:
         return HttpResponse("Could not find listing.")
     watchlist = None
