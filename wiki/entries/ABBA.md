@@ -1,3 +1,0 @@
-# ABBA
-
-ABBA.

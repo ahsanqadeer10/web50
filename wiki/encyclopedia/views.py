@@ -37,11 +37,10 @@ def entry(request, title):
 
 def new(request):
     if request.method == "POST":
-        print("New entry form posted!")
         form = NewEntryForm(request.POST)
         if form.is_valid():
             title = form.cleaned_data["title"]
-            markdown = form.cleaned_data["markdown"]
+            markdown = bytes(form.cleaned_data["markdown"], 'utf-8')
             entry = util.get_entry(title)
             if entry is None:
                 util.save_entry(title, markdown)
@@ -49,11 +48,12 @@ def new(request):
             else:
                 return render(request, "encyclopedia/new.html", {
                     "form": form,
-                    "error_msg": "An entry with the title already exists. Please write a different heading."
+                    "error_msg": "An entry with the title already exists. Please write a different title."
                 })
         else:
             return render(request, "encyclopedia/new.html", {
-                "form": form
+                "form": form,
+                "error_msg": "The form entry/entries are invalid. Please check again."
             })
 
     return render(request, "encyclopedia/new.html", {
@@ -63,19 +63,16 @@ def new(request):
 
 def edit(request, title):
     if request.method == "POST":
-        print("Edit route hit.")
         form = EditEntryForm(request.POST)
         if form.is_valid():
-            print("Valid form")
-            markdown = form.cleaned_data["markdown"]
-            print(title)
+            markdown = bytes(form.cleaned_data["markdown"], 'utf-8')
             util.save_entry(title, markdown)
-            print(title)
             return redirect(f"/wiki/{title}")
         else:
             return render(request, "encyclopedia/edit.html", {
                 "title": title,
-                "form": form
+                "form": form,
+                "error_msg": "The form entry/entries are invalid. Please check again."
             })
 
     entry = util.get_entry(title)
