@@ -1,8 +1,6 @@
-from django.forms.fields import CharField
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django import forms
-from pygments.lexer import default
 
 from . import util
 import markdown2
@@ -95,7 +93,6 @@ def search(request):
             for item in entries:
                 if query.lower() in item.lower():
                     search_results.append(item)
-            print(search_results)
             return render(request, "encyclopedia/search.html", {
                 "query": query,
                 "search_results": search_results

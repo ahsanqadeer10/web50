@@ -4,6 +4,8 @@ Results {%endblock%} {%block body%}
 <ul>
 	{% for result in search_results %}
 	<li><a href="{% url 'encyclopedia:entry' result %}"> {{result}} </a></li>
+	{% empty %}
+	<p>No search results found for '{{query}}'</p>
 	{% endfor %}
 </ul>
 {%endblock%}
