@@ -5,7 +5,7 @@
 A front-end for a simpler Google Search, Google Image Search, and Google Advanced Search. The entirely HTML front-end contains forms that sends queries to Google's web server and redirects the user to their results page. A combination of basic Sass and Javascript was used for styling and interactivity.
 
 #### Wiki
-A mini Wikipedia-like encyclopedia created using Django. It allows users to create and edit entries using the markup language Markdown, the entries are saved within the project directory. Users can view these entries as well, which are first converted from Markdown to HTML using a package called `markdown2`. The `utils.py` file which contains functions that lists all the entries in the directory, get a particular entry, and save an entry were provided by the course instructors.
+A mini Wikipedia-like encyclopedia created using Django. It allows users to create and edit entries using the markup language Markdown, the entries are saved within the project directory. Users can view these entries as well, which are first converted from Markdown to HTML using a package called `markdown2`. The `utils.py` file which contains functions that lists all the entries in the directory, get a particular entry, and save an entry, were provided by the course instructors.
 
 #### Commerce 
 Design an eBay-like e-commerce auction site that will allow users to post auction listings, place bids on listings, comment on those listings, and add listings to a “watchlist.”
