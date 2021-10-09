@@ -1,6 +1,5 @@
 # web50
-## Projects for CS50’s Web Programming with Python and JavaScript
-https://www.edx.org/course/cs50s-web-programming-with-python-and-javascript
+## Projects for [CS50’s Web Programming with Python and JavaScript](https://www.edx.org/course/cs50s-web-programming-with-python-and-javascript)
 
 * **Search:** Design a front-end for Google Search, Google Image Search, and Google Advanced Search.
 * **Wiki:** Design a Wikipedia-like online encyclopedia.
