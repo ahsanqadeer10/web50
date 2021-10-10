@@ -17,7 +17,7 @@
 
 	<div>
 	<div><h3>{{listing.title}}</h3></div>
-		<hr style="color: rgba(158, 42, 43, 1)" size="5" />
+		<hr style="color: rgba(158, 42, 43, 1)" size="4" />
 		<div>{{listing.date_created.date}} - {{listing.date_created.time}}</div>
 		<div><strong>Description: </strong>{{listing.description}}</div>
 		<div><strong>Starting Bid: </strong>{{listing.starting_bid}}</div>
@@ -63,14 +63,14 @@
 				class="btn btn-sm btn-success"
 				style="margin: 10px 0"
 				href="{% url 'watch' listing.id %}"
-				>Add to Watchlist.</a
+				>Add to Watchlist</a
 			>
 			{% elif listing in watchlist %}
 			<a
 				class="btn btn-sm btn-danger"
 				style="margin: 10px 0"
 				href="{% url 'unwatch' listing.id %}"
-				>Remove from Watchlist.</a
+				>Remove from Watchlist</a
 			>
 			{%endif%}
 		</div>

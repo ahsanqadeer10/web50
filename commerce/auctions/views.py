@@ -10,9 +10,13 @@ from .models import User, Listing, Category, Bid, Comment
 
 
 def index(request):
-    listings = Listing.objects.filter(active=True)
+    listings = Listing.objects.filter(active=True).order_by("-date_created")
+    watchlist = None
+    if request.user.is_authenticated:
+        watchlist = request.user.watchlist.all()
     return render(request, "auctions/index.html", {
-        "listings": listings
+        "listings": listings,
+        "watchlist": watchlist
     })
 
 

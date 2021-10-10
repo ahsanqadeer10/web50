@@ -1,37 +1,44 @@
 {%extends "auctions/layout.html"%} {%block title%}{{category.name}}{%endblock%}
 {%block body%}
 <h5>Active Listings from {{category.name}}</h5>
-<div id="listing-grid">
+<div id="listings">
 	{%for listing in listings%}
-	<div class="card">
-		{%if listing.image%}
-		<div class="card-image">
-			<img src="{{listing.image}}" class="img-fluid" alt="Product Image" />
-		</div>
-		{%endif%}
-		<div class="card-info">
-			<div style="font-weight: 500; font-size: 1.5em">{{listing.title}}</div>
-			<div>{{listing.description}}</div>
-			<a
-				class="btn btn-sm btn-dark"
-				style="margin: 10px 0"
-				href="{% url 'listing' listing.id %}"
-				>View Details</a
-			>
-			<div>
-				<strong>Created: </strong>{{listing.date_created.date}} -
-				{{listing.date_created.time}}
+	<div>
+		<a href="{% url 'listing' listing.id %}">
+			<div class="card">
+				{%if listing.image%}
+				<div class="card-image">
+					<img src="{{listing.image}}" class="img-fluid" alt="Product Image" />
+				</div>
+				{%endif%}
+				<div class="card-info">
+					<div style="font-weight: 500; font-size: 1.5em">
+						{{listing.title}}
+					</div>
+					{% if user.is_authenticated %} {% if listing.creator == request.user%}
+					<div><span class="infospan creator-infospan">Creator</span></div>
+					{% endif %} {% if listing in watchlist %}
+					<div>
+						<span class="infospan watchlist-infospan">In Watchlist</span>
+					</div>
+					{% endif %} {% endif %}
+					<div>{{listing.description}}</div>
+
+					<div>
+						<strong>Created: </strong>{{listing.date_created.date}} -
+						{{listing.date_created.time}}
+					</div>
+					<div><strong>Starting Bid:</strong> {{listing.starting_bid}}</div>
+
+					{% if listing.highest_bid %}
+					<div><strong>Highest Bid:</strong> {{listing.highest_bid}}</div>
+					{%else%}
+					<div><strong>No bids yet!</strong></div>
+					{%endif%}
+				</div>
 			</div>
-			<div><strong>Starting Bid:</strong> {{listing.starting_bid}}</div>
-
-			{% if listing.highest_bid %}
-			<div><strong>Highest Bid:</strong> {{listing.highest_bid}}</div>
-			{%else%}
-			<div><strong>No bids yet!</strong></div>
-			{%endif%}
-		</div>
+		</a>
 	</div>
-
 	{%empty%}
 	<div>No listings from this category.</div>
 </div>

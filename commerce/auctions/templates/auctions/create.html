@@ -1,35 +1,51 @@
 {%extends "auctions/layout.html"%} {%block title%}Create Auction
 Listing{%endblock%} {%block body%}
 <div class="form-view">
-<h3>Create Auction Listing</h3>
+	<h3>Create Auction Listing</h3>
 	{% for alert_message in alert_messages %}
 	<div class="alert-message {{alert_message.type}}">{{alert_message.text}}</div>
 	{% empty %} {% endfor %}
-<form action="{% url 'create' %}" method="POST">
-    {% csrf_token %}
-	<div>
-	<input type="text" name="title" placeholder="Title" required maxlength="64"/>
-	</div>
-	<div>
-	<input type="text" name="description" placeholder="Description" required maxlength="250"/>
-	</div>
-	<div>
-	<input type="text" name="image" placeholder="Image" />
-	</div>
-	<div>
-	<input type="number" name="starting_bid" placeholder="Starting Bid" required/>
-	</div>
-	<div>
-	<select name="category" required/>
-	
-		{%for category in categories%}
-		<option value="{{category.id}}">{{category}}</option>
-        {%endfor%}
-	</select>
-	</div>
-    <div>
-	<button type="submit">Create Listing</button>
-	</div>
-</form>
+	<form action="{% url 'create' %}" method="POST">
+		{% csrf_token %}
+		<div>
+			<input
+				type="text"
+				name="title"
+				placeholder="Title"
+				required
+				maxlength="64"
+			/>
+		</div>
+		<div>
+			<input
+				type="text"
+				name="description"
+				placeholder="Description"
+				required
+				maxlength="250"
+			/>
+		</div>
+		<div>
+			<input type="text" name="image" placeholder="Image" />
+		</div>
+		<div>
+			<input
+				type="number"
+				name="starting_bid"
+				placeholder="Starting Bid"
+				required
+			/>
+		</div>
+		<div>
+			<select name="category" required>
+				{%for category in categories%}
+				<option value="{{category.id}}">{{category}}</option>
+				{%endfor%}
+			</select>
+		</div>
+		<div>
+			<button type="submit">Create Listing</button>
+		</div>
+	</form>
 </div>
 {%endblock%}

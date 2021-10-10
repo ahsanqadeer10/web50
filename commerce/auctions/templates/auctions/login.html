@@ -2,11 +2,8 @@
 <div class="form-view">
 	<h3>Login</h3>
 	{% for alert_message in alert_messages %}
-	<div class="alert-message {{alert_message.type}}">
-        {{alert_message.text}}
-    </div>
-	{% empty %}
-	{% endfor %}
+	<div class="alert-message {{alert_message.type}}">{{alert_message.text}}</div>
+	{% empty %} {% endfor %}
 	<form action="{% url 'login' %}" method="post">
 		{% csrf_token %}
 		<div>
@@ -15,13 +12,12 @@
 		<div>
 			<input type="password" name="password" placeholder="Password" />
 		</div>
-        <div>
-		<button type="submit" />Login</button>
-        </div>
+		<button type="submit">Login</button>
 	</form>
 
 	<div>
-		Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+		Don't have an account?
+		<a class="basic-link" href="{% url 'register' %}">Register here.</a>
 	</div>
 </div>
 
