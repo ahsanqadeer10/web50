@@ -31,23 +31,28 @@ def compose(request):
 
     # Check recipient emails
     data = json.loads(request.body)
-    emails = [email.strip() for email in data.get("recipients").split(",")]
-    if emails == [""]:
-        return JsonResponse({
-            "error": "At least one recipient required."
-        }, status=400)
-
-    # Convert email addresses to users
+    parent_id = data.get("parent_id")
     recipients = []
-    for email in emails:
-        try:
-            user = User.objects.get(email=email)
-            recipients.append(user)
-        except User.DoesNotExist:
+    if parent_id != -1:
+        parent = Email.objects.get(pk = parent_id)
+        recipients.append(parent.sender)
+    else:
+        emails = [email.strip() for email in data.get("recipients").split(",")]
+        if emails == [""]:
             return JsonResponse({
-                "error": f"User with email {email} does not exist."
+                "error": "At least one recipient required."
             }, status=400)
-
+        # Convert email addresses to users
+        
+        for email in emails:
+            try:
+                user = User.objects.get(email=email)
+                recipients.append(user)
+            except User.DoesNotExist:
+                return JsonResponse({
+                    "error": f"User with email {email} does not exist."
+                }, status=400)
+        
     # Get contents of email
     subject = data.get("subject", "")
     body = data.get("body", "")
@@ -62,13 +67,19 @@ def compose(request):
             sender=request.user,
             subject=subject,
             body=body,
-            read=user == request.user
+            read=user == request.user,
         )
         email.save()
         for recipient in recipients:
             email.recipients.add(recipient)
+            email.save()
+        if parent_id != -1:
+            email.parent = Email.objects.get(pk=parent_id)
+        else:
+            email.parent = None
         email.save()
-
+        
+    
     return JsonResponse({"message": "Email sent successfully."}, status=201)
 
 

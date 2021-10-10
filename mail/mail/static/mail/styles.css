@@ -1,3 +1,26 @@
+body {
+	font-family: sans-serif;
+}
+
 textarea {
-    min-height: 400px;
+	min-height: 400px;
+}
+
+.email {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.email:hover {
+	cursor: pointer;
+}
+
+.read {
+	background-color: gray;
+}
+
+#email-view > div {
+	line-height: 1.5em;
 }
