@@ -11,4 +11,4 @@ A mini Wikipedia-like encyclopedia created using Django. It allows any user to c
 A mini eBay-like e-commerce auction site built using Django. The website serves basic e-commerce utility allowing users to create auction listings, place bids, comment on listings, and add listings to watchlist. The Django authentication system and models were used to register and store users and their listings, comments, bids.
 
 #### Mail
-Design a front-end for an email client that makes API calls to send and receive emails.
+A front-end for a very basic email client. The back-end and the email API was provided and the objective was to use Javascript to make API calls and update the single-page user interface. The project has not been styled but serves its function. 
