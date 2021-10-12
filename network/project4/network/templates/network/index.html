@@ -1,28 +1,5 @@
-{% extends "network/layout.html" %} {% block body %}
-<div><h1>All Posts</h1></div>
+{% extends "network/layout.html" %}
 
-{%if user.is_authenticated%}
-<div>
-	<form action="{% url 'post' %}" method="post">
-		{% csrf_token %}
-		<div>
-			<label for="post_content" class="form-label">New Post</label>
-			<textarea name="post_content" class="form-control" rows="2"></textarea>
-		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
-	</form>
-</div>
-
-<div>
-	{% for post in posts %}
-	<div style="margin: 10px 0">
-		<div>{{post}}</div>
-		<div>{{post.author}}</div>
-		<div>{{post.created_at}}</div>
-		<div>Likes: 0</div>
-	</div>
-	{% empty %}
-	<h4>No posts to show :(</h4>
-	{% endfor %}
-</div>
-{% endif %} {% endblock %}
+{% block body %}
+    TODO
+{% endblock %}

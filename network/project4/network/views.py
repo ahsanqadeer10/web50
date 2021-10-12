@@ -1,21 +1,14 @@
-import json
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.http.response import HttpResponseForbidden, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.decorators import csrf
-from django.views.decorators.csrf import csrf_exempt
 
-from .models import User, Post
+from .models import User
 
 
 def index(request):
-    posts = Post.objects.all().order_by('-created_at')
-    return render(request, "network/index.html", {
-        "posts": posts
-    })
+    return render(request, "network/index.html")
 
 
 def login_view(request):
@@ -68,22 +61,3 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
-
-
-def post(request):
-    # Check if the request is POST and if user is logged in
-    if request.method == "POST" and request.user.is_authenticated:
-        
-        # Get the post content and the user
-        post_content = request.POST["post_content"]
-        user = User.objects.get(pk = request.user.id)
-        if user is None:
-            return HttpResponse("Cannot create post. User does not exist.")
-        
-        # Create and save post
-        try:
-            post = Post(content=post_content, author=user)
-            post.save()
-        except Exception:
-            return HttpResponse("Could not create post.")
-        return HttpResponseRedirect(reverse('index'))
