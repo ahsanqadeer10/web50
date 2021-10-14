@@ -92,6 +92,24 @@ def post(request):
     return HttpResponse("post route hit")
 
 
+@login_required
+def post_edit(request, post_id):
+    if request.method == "PUT":
+        post = Post.objects.get(id=post_id)
+        if request.user != post.author:
+            return HttpResponse("Could not edit post.")
+        data = json.loads(request.body)
+        modified_content = data.get("modified_content")
+        try:
+            post.content = modified_content
+            post.save()
+        except Exception:
+            return HttpResponse("Could not edit post.")
+        return JsonResponse({
+            "message": "success"
+        }, status=200)
+
+
 def profile(request, username):
     try:
         profile = User.objects.get(username=username)

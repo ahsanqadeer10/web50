@@ -20,11 +20,11 @@ header {
 	a {
 		font-weight: 700;
 		letter-spacing: -0.2px;
-		text-shadow: 0px 0.5px 0.5px rgba(0, 0, 0, 0.2);
+		text-shadow: 0.5px 0.5px 1px rgba(15, 76, 92, 0.5);
 	}
 
 	#logo a {
-		@include clear_link($color: rgb(238, 108, 77));
+		@include clear_link($color: rgb(15, 76, 92));
 		font-size: 26px;
 	}
 
@@ -36,33 +36,34 @@ header {
 		padding: 0;
 
 		a {
-			@include clear_link($color: rgba(238, 108, 77, 0.5));
+			@include clear_link($color: rgba(15, 76, 92, 0.5));
 			padding: 5px 10px;
 		}
 
 		.header-link:hover {
-			color: rgb(238, 108, 77);
+			color: rgb(15, 76, 92);
 		}
 
 		.header-link-auth {
-			border: 2px solid rgba(238, 108, 77, 0.5);
+			border: 2px solid rgba(15, 76, 92, 0.5);
+			border-radius: 5px;
 		}
 
 		.header-link-auth:hover {
 			color: white;
-			background-color: rgb(238, 108, 77);
-			box-shadow: 0px 0.5px 1px 0.5px rgba(0, 0, 0, 0.5);
+			background-color: rgb(15, 76, 92);
+			box-shadow: 0.5px 0.5px 1px 0.5px rgba(15, 76, 92, 0.5);
 		}
 
 		.header-link.active-header-link {
-			color: rgb(238, 108, 77);
-			border-bottom: 2px solid rgb(238, 108, 77);
+			color: rgb(15, 76, 92);
+			border-bottom: 2px solid rgb(15, 76, 92);
 		}
 
 		.header-link-auth.active-header-link {
 			color: white;
-			background-color: rgb(238, 108, 77);
-			box-shadow: 0px 0.5px 1px 0.5px rgba(0, 0, 0, 0.5);
+			background-color: rgb(15, 76, 92);
+			box-shadow: 0.5px 0.5px 1px 0.5px rgba(15, 76, 92, 0.5);
 		}
 	}
 }
@@ -72,11 +73,138 @@ header {
 }
 
 #posts {
-	margin: 40px 0;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	align-items: center;
+	margin: 20px 0px;
+	padding: 20px 0px;
 
 	.post-card {
-		border: 1px solid black;
-		padding: 20px 0;
-		margin: 10px 0;
+		padding: 10px 0px;
+		width: 60%;
+		box-shadow: 0px 0.5px 5px 0.5px rgba(0, 0, 0, 0.2);
+
+		> div {
+			padding: 5px 20px;
+		}
+
+		.top {
+			font-size: 10px;
+			color: rgba(0, 0, 0, 0.6);
+
+			a {
+				@include clear_link;
+				font-weight: 700;
+				font-size: 18px;
+				margin-right: 10px;
+			}
+
+			a:hover {
+				color: rgb(15, 76, 92);
+			}
+		}
+
+		.content {
+			letter-spacing: -0.5px;
+			line-height: 1.4em;
+		}
+
+		textarea {
+			width: 100%;
+			padding: 10px;
+
+			border: 1px solid rgb(0, 0, 0, 0.2);
+			box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.2);
+			font-size: 0.8em;
+			outline: none;
+		}
+
+		textarea:focus {
+			border: 1px solid rgba(15, 76, 92, 0.5);
+			box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.5);
+		}
+
+		.likes {
+			font-size: 14px;
+		}
+	}
+}
+
+.new-post-box {
+	display: flex;
+	justify-content: center;
+
+	form {
+		padding: 10px;
+		width: 60%;
+		box-shadow: 0.5px 0.5px 5px 0.5px rgba(0, 0, 0, 0.2);
+
+		textarea {
+			width: 100%;
+			padding: 10px;
+
+			border: 1px solid rgb(0, 0, 0, 0.2);
+			box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.2);
+			font-size: 0.8em;
+		}
+
+		textarea:focus {
+			border: 1px solid rgba(15, 76, 92, 0.5);
+			box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.5);
+			outline: none;
+		}
+
+		button {
+			border: none;
+			float: right;
+			padding: 5px 20px;
+			background-color: rgba(15, 76, 92, 1);
+			color: white;
+			box-shadow: 0.5px 0.5px 2px 0.5px rgba(15, 76, 92, 0.5);
+			margin-top: 5px;
+			border-radius: 6px;
+		}
+
+		button:hover {
+			box-shadow: 0.5px 0.5px 5px 0.5px rgba(15, 76, 92, 1);
+			transition: ease-in-out;
+		}
+	}
+}
+
+.profile-card {
+	> div {
+		font-weight: 700;
+	}
+
+	.top {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+
+		.username {
+			font-size: 34px;
+			text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.5);
+			font-weight: 200;
+		}
+
+		.follow-toggle-box {
+			button {
+				background-color: rgba(15, 76, 92, 1);
+				color: white;
+				border: none;
+				font-weight: 700;
+				padding: 5px 10px;
+				font-size: 0.8em;
+				box-shadow: 0.5px 0.5px 1px 0.5px rgba(15, 76, 92, 0.5);
+				transition: ease-out 1s;
+				width: 100px;
+			}
+
+			button.follow-toggle-true {
+				background-color: rgba(15, 76, 92, 0.5);
+			}
+		}
 	}
 }

@@ -1,0 +1,49 @@
+<div id="posts">
+	{% for post in posts_page.object_list %}
+	<div class="post-card" data-post_id="{{post.id}}">
+		<div class="top">
+			<span><a href="{% url 'profile' post.author %}">{{post.author}}</a></span>
+			<span>{{post.created_at}}</span>
+		</div>
+		<div class="content">{{post.content}}</div>
+		{% if user.is_authenticated and user.id == post.author.id %}
+		<div class="edit-btns">
+			<button class="edit">Edit</button>
+		</div>
+		{% endif %}
+		<div class="likes">0 Likes</div>
+	</div>
+	{% endfor %} {% if posts_page.object_list is empty %}
+	<h4>No posts yet...</h4>
+	{% else %}
+	<div aria-label="Page navigation">
+		<span class="pagination">
+			{% if posts_page.has_previous %}
+			<li class="page-item"><a class="page-link" href="?page=1">first</a></li>
+			<li class="page-item">
+				<a class="page-link" href="?page={{posts_page.previous_page_number}}"
+					>previous</a
+				>
+			</li>
+			{% endif %}
+
+			<span>
+				Page {{posts_page.number}} of {{posts_page.paginator.num_pages}}
+			</span>
+
+			{% if posts_page.has_next %}
+			<li class="page-item">
+				<a class="page-link" href="?page={{posts_page.next_page_number}}"
+					>next</a
+				>
+			</li>
+			<li class="page-item">
+				<a class="page-link" href="?page={{posts_page.paginator.num_pages}}"
+					>last</a
+				>
+			</li>
+			{% endif %}
+		</span>
+	</div>
+	{%endif%}
+</div>

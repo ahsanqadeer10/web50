@@ -14,10 +14,10 @@ header > div {
 header a {
   font-weight: 700;
   letter-spacing: -0.2px;
-  text-shadow: 0px 0.5px 0.5px rgba(0, 0, 0, 0.2);
+  text-shadow: 0.5px 0.5px 1px rgba(15, 76, 92, 0.5);
 }
 header #logo a {
-  color: #ee6c4d;
+  color: #0f4c5c;
   text-decoration: none;
   font-size: 26px;
 }
@@ -29,29 +29,30 @@ header ul {
   padding: 0;
 }
 header ul a {
-  color: rgba(238, 108, 77, 0.5);
+  color: rgba(15, 76, 92, 0.5);
   text-decoration: none;
   padding: 5px 10px;
 }
 header ul .header-link:hover {
-  color: #ee6c4d;
+  color: #0f4c5c;
 }
 header ul .header-link-auth {
-  border: 2px solid rgba(238, 108, 77, 0.5);
+  border: 2px solid rgba(15, 76, 92, 0.5);
+  border-radius: 5px;
 }
 header ul .header-link-auth:hover {
   color: white;
-  background-color: #ee6c4d;
-  box-shadow: 0px 0.5px 1px 0.5px rgba(0, 0, 0, 0.5);
+  background-color: #0f4c5c;
+  box-shadow: 0.5px 0.5px 1px 0.5px rgba(15, 76, 92, 0.5);
 }
 header ul .header-link.active-header-link {
-  color: #ee6c4d;
-  border-bottom: 2px solid #ee6c4d;
+  color: #0f4c5c;
+  border-bottom: 2px solid #0f4c5c;
 }
 header ul .header-link-auth.active-header-link {
   color: white;
-  background-color: #ee6c4d;
-  box-shadow: 0px 0.5px 1px 0.5px rgba(0, 0, 0, 0.5);
+  background-color: #0f4c5c;
+  box-shadow: 0.5px 0.5px 1px 0.5px rgba(15, 76, 92, 0.5);
 }
 
 .body {
@@ -59,12 +60,117 @@ header ul .header-link-auth.active-header-link {
 }
 
 #posts {
-  margin: 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin: 20px 0px;
+  padding: 20px 0px;
 }
 #posts .post-card {
-  border: 1px solid black;
-  padding: 20px 0;
-  margin: 10px 0;
+  padding: 10px 0px;
+  width: 60%;
+  box-shadow: 0px 0.5px 5px 0.5px rgba(0, 0, 0, 0.2);
+}
+#posts .post-card > div {
+  padding: 5px 20px;
+}
+#posts .post-card .top {
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.6);
+}
+#posts .post-card .top a {
+  color: black;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 18px;
+  margin-right: 10px;
+}
+#posts .post-card .top a:hover {
+  color: #0f4c5c;
+}
+#posts .post-card .content {
+  letter-spacing: -0.5px;
+  line-height: 1.4em;
+}
+#posts .post-card textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.2);
+  font-size: 0.8em;
+  outline: none;
+}
+#posts .post-card textarea:focus {
+  border: 1px solid rgba(15, 76, 92, 0.5);
+  box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.5);
+}
+#posts .post-card .likes {
+  font-size: 14px;
+}
+
+.new-post-box {
+  display: flex;
+  justify-content: center;
+}
+.new-post-box form {
+  padding: 10px;
+  width: 60%;
+  box-shadow: 0.5px 0.5px 5px 0.5px rgba(0, 0, 0, 0.2);
+}
+.new-post-box form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.2);
+  font-size: 0.8em;
+}
+.new-post-box form textarea:focus {
+  border: 1px solid rgba(15, 76, 92, 0.5);
+  box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.5);
+  outline: none;
+}
+.new-post-box form button {
+  border: none;
+  float: right;
+  padding: 5px 20px;
+  background-color: #0f4c5c;
+  color: white;
+  box-shadow: 0.5px 0.5px 2px 0.5px rgba(15, 76, 92, 0.5);
+  margin-top: 5px;
+  border-radius: 6px;
+}
+.new-post-box form button:hover {
+  box-shadow: 0.5px 0.5px 5px 0.5px #0f4c5c;
+  transition: ease-in-out;
+}
+
+.profile-card > div {
+  font-weight: 700;
+}
+.profile-card .top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.profile-card .top .username {
+  font-size: 34px;
+  text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.5);
+  font-weight: 200;
+}
+.profile-card .top .follow-toggle-box button {
+  background-color: #0f4c5c;
+  color: white;
+  border: none;
+  font-weight: 700;
+  padding: 5px 10px;
+  font-size: 0.8em;
+  box-shadow: 0.5px 0.5px 1px 0.5px rgba(15, 76, 92, 0.5);
+  transition: ease-out 1s;
+  width: 100px;
+}
+.profile-card .top .follow-toggle-box button.follow-toggle-true {
+  background-color: rgba(15, 76, 92, 0.5);
 }
 
 /*# sourceMappingURL=styles.css.map */
