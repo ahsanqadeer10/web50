@@ -23,6 +23,10 @@ def index(request):
         return HttpResponse("Page does not exist.")
     else:
         posts_page = paginator.page(int(request.GET.get("page")))
+    for post in posts_page:
+        post.like_count = post.likes.all().count
+        if request.user.is_authenticated:
+            post.user_likes = request.user in post.likes.all()
     return render(request, "network/index.html", {
         "posts_page": posts_page
     })
@@ -108,6 +112,34 @@ def post_edit(request, post_id):
         return JsonResponse({
             "message": "success"
         }, status=200)
+
+
+@login_required
+def post_like(request, post_id):
+    user = request.user
+    post = Post.objects.get(pk=post_id)
+    if user in post.likes.all():
+        return HttpResponse("Something is wrong. Could not like post.")
+    try:
+        post.likes.add(user)
+        post.save()
+    except Exception:
+        return HttpResponse("Something is wrong. Could not like post.")
+    return JsonResponse({"message": "success", "like_count": post.likes.count()})
+
+
+@login_required
+def post_unlike(request, post_id):
+    user = request.user
+    post = Post.objects.get(pk=post_id)
+    if user not in post.likes.all():
+        return HttpResponse("Something is wrong. Could not unlike post.")
+    try:
+        post.likes.remove(user)
+        post.save()
+    except Exception:
+        return HttpResponse("Something is wrong. Could not unlike post.")
+    return JsonResponse({"message": "success", "like_count": post.likes.count()})
 
 
 def profile(request, username):

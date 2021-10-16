@@ -5,6 +5,7 @@
 
 body {
 	font-family: "Inter", sans-serif;
+	font-size: 15px;
 }
 
 header {
@@ -89,7 +90,7 @@ header {
 			padding: 5px 20px;
 		}
 
-		.top {
+		.post-top {
 			font-size: 10px;
 			color: rgba(0, 0, 0, 0.6);
 
@@ -105,27 +106,50 @@ header {
 			}
 		}
 
-		.content {
+		.post-content {
 			letter-spacing: -0.5px;
-			line-height: 1.4em;
 		}
 
 		textarea {
 			width: 100%;
 			padding: 10px;
-
-			border: 1px solid rgb(0, 0, 0, 0.2);
-			box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.2);
-			font-size: 0.8em;
 			outline: none;
 		}
 
 		textarea:focus {
 			border: 1px solid rgba(15, 76, 92, 0.5);
-			box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.5);
 		}
 
-		.likes {
+		.like {
+			border: none;
+			padding: 6px 20px;
+			font-weight: 700;
+			letter-spacing: -0.2px;
+		}
+
+		.like[data-toggle="true"] {
+			background-color: white;
+			color: rgba(15, 76, 92, 1);
+			box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.2);
+		}
+
+		.like[data-toggle="true"]:hover {
+			background-color: rgba(15, 76, 92, 1);
+			color: white;
+			box-shadow: 0px 1px 4px 0.5px rgba(31, 21, 21, 0.2) inset;
+		}
+
+		.like[data-toggle="false"] {
+			color: white;
+			background-color: rgba(15, 76, 92, 1);
+			box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.2) inset;
+		}
+
+		.like[data-toggle="false"]:hover {
+			box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.2);
+		}
+
+		.post-likes {
 			font-size: 14px;
 		}
 	}

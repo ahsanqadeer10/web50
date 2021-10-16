@@ -1,17 +1,27 @@
 <div id="posts">
 	{% for post in posts_page.object_list %}
 	<div class="post-card" data-post_id="{{post.id}}">
-		<div class="top">
+		<div class="post-top">
 			<span><a href="{% url 'profile' post.author %}">{{post.author}}</a></span>
 			<span>{{post.created_at}}</span>
 		</div>
-		<div class="content">{{post.content}}</div>
+		<div class="post-content">{{post.content}}</div>
 		{% if user.is_authenticated and user.id == post.author.id %}
-		<div class="edit-btns">
+		<div class="post-buttons">
 			<button class="edit">Edit</button>
 		</div>
+		{% endif %} {% if user.is_authenticated %}
+		<div>
+			{%if post.user_likes%}
+			<button class="like" data-toggle="false">Liked!</button>
+			{%else%}
+			<button class="like" data-toggle="true">Like</button>
+			{%endif%}
+		</div>
 		{% endif %}
-		<div class="likes">0 Likes</div>
+		<div class="post-likes">
+			{% if post.like_count > 0 %} Liked by {{post.like_count}} {% endif %}
+		</div>
 	</div>
 	{% endfor %} {% if posts_page.object_list is empty %}
 	<h4>No posts yet...</h4>

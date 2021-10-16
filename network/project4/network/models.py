@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models.fields.reverse_related import OneToOneRel
 
 
 class User(AbstractUser):
@@ -13,6 +14,6 @@ class User(AbstractUser):
 class Post(models.Model):
     content = models.TextField(null=False, blank=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
+    likes = models.ManyToManyField(User, related_name="posts_liked")
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified_at = models.DateTimeField(auto_now=True)
-    

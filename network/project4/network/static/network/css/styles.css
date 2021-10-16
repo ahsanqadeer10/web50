@@ -1,5 +1,6 @@
 body {
   font-family: "Inter", sans-serif;
+  font-size: 15px;
 }
 
 header {
@@ -75,37 +76,56 @@ header ul .header-link-auth.active-header-link {
 #posts .post-card > div {
   padding: 5px 20px;
 }
-#posts .post-card .top {
+#posts .post-card .post-top {
   font-size: 10px;
   color: rgba(0, 0, 0, 0.6);
 }
-#posts .post-card .top a {
+#posts .post-card .post-top a {
   color: black;
   text-decoration: none;
   font-weight: 700;
   font-size: 18px;
   margin-right: 10px;
 }
-#posts .post-card .top a:hover {
+#posts .post-card .post-top a:hover {
   color: #0f4c5c;
 }
-#posts .post-card .content {
+#posts .post-card .post-content {
   letter-spacing: -0.5px;
-  line-height: 1.4em;
 }
 #posts .post-card textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.2);
-  font-size: 0.8em;
   outline: none;
 }
 #posts .post-card textarea:focus {
   border: 1px solid rgba(15, 76, 92, 0.5);
-  box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.5);
 }
-#posts .post-card .likes {
+#posts .post-card .like {
+  border: none;
+  padding: 6px 20px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+#posts .post-card .like[data-toggle=true] {
+  background-color: white;
+  color: #0f4c5c;
+  box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.2);
+}
+#posts .post-card .like[data-toggle=true]:hover {
+  background-color: #0f4c5c;
+  color: white;
+  box-shadow: 0px 1px 4px 0.5px rgba(31, 21, 21, 0.2) inset;
+}
+#posts .post-card .like[data-toggle=false] {
+  color: white;
+  background-color: #0f4c5c;
+  box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.2) inset;
+}
+#posts .post-card .like[data-toggle=false]:hover {
+  box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.2);
+}
+#posts .post-card .post-likes {
   font-size: 14px;
 }
 
