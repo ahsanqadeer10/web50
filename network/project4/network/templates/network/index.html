@@ -1,4 +1,16 @@
 {% extends "network/layout.html" %} {% block body %}
+
+<!--Messages-->
+{% if messages %}
+<ul class="messages">
+	{% for message in messages %}
+	<li {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+		{{ message }}
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
 <!--New post form-->
 {% if user.is_authenticated %}
 <div class="new-post-box">

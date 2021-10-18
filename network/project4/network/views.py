@@ -1,6 +1,7 @@
 import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views.decorators import csrf
 from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
@@ -17,16 +18,16 @@ def index(request):
     posts = Post.objects.all().order_by('-created_at')
     paginator = Paginator(posts, 10)
     posts_page = None
-    if request.GET.get("page") is None:
+    if request.GET.get("page") is None or int(request.GET.get("page")) < 1:
         posts_page = paginator.page(1)
-    elif int(request.GET.get("page")) not in paginator.page_range:
-        return HttpResponse("Page does not exist.")
+    elif int(request.GET.get("page")) > paginator.num_pages:
+        posts_page = paginator.page(paginator.num_pages)
     else:
         posts_page = paginator.page(int(request.GET.get("page")))
     for post in posts_page:
         post.like_count = post.likes.all().count
         if request.user.is_authenticated:
-            post.user_likes = request.user in post.likes.all()
+            post.user_likes = request.user in post.likes.all() 
     return render(request, "network/index.html", {
         "posts_page": posts_page
     })
@@ -125,7 +126,7 @@ def post_like(request, post_id):
         post.save()
     except Exception:
         return HttpResponse("Something is wrong. Could not like post.")
-    return JsonResponse({"message": "success", "like_count": post.likes.count()})
+    return JsonResponse({"message": "success", "like_count": post.likes.count()}, status=200)
 
 
 @login_required
@@ -139,7 +140,22 @@ def post_unlike(request, post_id):
         post.save()
     except Exception:
         return HttpResponse("Something is wrong. Could not unlike post.")
-    return JsonResponse({"message": "success", "like_count": post.likes.count()})
+    return JsonResponse({"message": "success", "like_count": post.likes.count()}, status=200)
+
+
+@login_required
+def post_delete(request, post_id):
+    user = request.user
+    post = Post.objects.get(pk=post_id)
+    if user != post.author:
+        return JsonResponse({"message": "failed"})
+    try:
+        post.delete()
+    except Exception:
+        return JsonResponse({"message": "failed"})
+    messages.success(request, 'Post deletion successful')  
+    return JsonResponse({"message": "success"}, status=200)
+
 
 
 def profile(request, username):
@@ -157,6 +173,10 @@ def profile(request, username):
         following = None
         if request.user.is_authenticated:
             following = profile in request.user.following.all()
+        for post in posts_page:
+            post.like_count = post.likes.all().count
+            if request.user.is_authenticated:
+                post.user_likes = request.user in post.likes.all()
         return render(request, "network/profile.html", {
         "profile": profile,
         "followers_count": profile.followers.count(),
@@ -210,6 +230,10 @@ def following(request):
                 return HttpResponse("Page does not exist.")
             else:
                 posts_page = paginator.page(int(request.GET.get("page")))
+    for post in posts_page:
+        post.like_count = post.likes.all().count
+        if request.user.is_authenticated:
+            post.user_likes = request.user in post.likes.all()
     return render(request, "network/following.html", {
         "posts_page": posts_page
     })

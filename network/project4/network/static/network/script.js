@@ -44,6 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		on_index_load();
 	} else if (url_name == "profile") {
 		on_profile_load();
+	} else if (url_name == "following") {
+		on_following_load();
 	}
 
 	function activate_header_link(url_name) {
@@ -61,11 +63,17 @@ document.addEventListener("DOMContentLoaded", function () {
 		auto_resize_textarea();
 		setup_post_edit_mechanism();
 		setup_post_like_mechanism();
+		setup_post_delete_mechanism();
 	}
 
 	function on_profile_load() {
 		setup_post_edit_mechanism();
 		setup_follow_mechanism();
+		setup_post_like_mechanism();
+		setup_post_delete_mechanism();
+	}
+
+	function on_following_load() {
 		setup_post_like_mechanism();
 	}
 });
@@ -255,7 +263,6 @@ function setup_post_like_mechanism() {
 			.then((response) => response.json())
 			.then((results) => {
 				if (results.message == "success") {
-					console.log("Post liked!");
 					change_toggle(false);
 					change_like_count(results.like_count);
 				}
@@ -268,7 +275,7 @@ function setup_post_like_mechanism() {
 			return;
 		}
 
-		fetch(`post/${post_elem.dataset["post_id"]}/unlike`, {
+		fetch(`/post/${post_elem.dataset["post_id"]}/unlike`, {
 			method: "PUT",
 			credentials: "same-origin",
 			headers: {
@@ -278,7 +285,6 @@ function setup_post_like_mechanism() {
 			.then((response) => response.json())
 			.then((results) => {
 				if (results.message == "success") {
-					console.log("Post unliked!");
 					change_toggle(true);
 					change_like_count(results.like_count);
 				}
@@ -302,5 +308,44 @@ function setup_post_like_mechanism() {
 		} else {
 			post_elem.querySelector(".post-likes").innerText = "";
 		}
+	}
+}
+
+function setup_post_delete_mechanism() {
+	post_elem = null;
+
+	document.querySelectorAll(".post-buttons .remove").forEach((button) => {
+		button.onclick = () => {
+			console.log("Remove button clicked!");
+			post_elem = button.parentNode.parentNode;
+			take_confirmation();
+		};
+	});
+
+	function take_confirmation() {
+		var modal = bootstrap.Modal.getInstance($("#remove-post-modal"));
+		document.onclick = () => {
+			if (this.event.target.id == "remove-confirm") {
+				delete_post();
+			}
+		};
+	}
+
+	function delete_post() {
+		fetch(`/post/${post_elem.dataset["post_id"]}/delete`, {
+			method: "DELETE",
+			credentials: "same-origin",
+			headers: {
+				"X-CSRFToken": get_cookie("csrftoken"),
+			},
+		})
+			.then((response) => response.json())
+			.then((results) => {
+				if (results.message == "success") {
+					console.log("Successully deleted post!");
+					$("#remove-post-modal").hide();
+					location.reload();
+				}
+			});
 	}
 }
