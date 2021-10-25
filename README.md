@@ -12,3 +12,6 @@ A mini eBay-like e-commerce auction site built using Django. The website serves 
 
 #### Mail
 A front-end for a very basic email client. The back-end and the email API was provided and the objective was to use Javascript to make API calls and update the single-page user interface. The project has not been styled but serves its function. 
+
+#### Network
+A basic Twitter-like social network built using Django to create, edit, delete posts, follow other users, and like posts. The application used considerable Javascript to make API calls to the back-end and update the user interface. Sass was used to style the project, and some basic tests were written to check the database and the contexts provided to the responses.
