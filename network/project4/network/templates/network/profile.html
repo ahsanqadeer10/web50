@@ -3,8 +3,11 @@
 
 <!--block body-->
 {% block body %}
-<div class="profile-card">
-	<div class="top">
+<div id="profile-page">
+	<section id="profile">
+		<div class="profile-picture">
+			<img src="{{ profile.profile_picture_url }}" />
+		</div>
 		<div class="username">{{profile.username}}</div>
 
 		{% if user.is_authenticated and user.id != profile.id %}
@@ -22,9 +25,25 @@
 			{% endif %}
 		</div>
 		{% endif %}
-	</div>
-	<div>Followers: <span id="followers-count">{{followers_count}}</span></div>
-	<div>Following: {{following_count}}</div>
+		<div class="stats">
+			<div>Followers <span id="followers-count">{{followers_count}}</span></div>
+			<div>Following <span>{{following_count}}</span></div>
+		</div>
+	</section>
+
+	<section id="posts">
+		{% if user.is_authenticated and user.id == profile.id %}
+		<h1>Your Posts</h1>
+		{% else %}
+		<h1>{{profile.username}}'s Posts</h1>
+		{% endif %}
+		<!--Posts start-->
+		{%if not posts_page%} {%if user.is_authenticated and user.id == profile.id%}
+		<div>You have not posted yet.</div>
+		{%else%}
+		<div>{{profile.username}} has not posted yet.</div>
+		{%endif%} {%else%} {%load inclusiontag%} {%display_posts%} {%endif%}
+	</section>
 </div>
-<div>{% load inclusiontag %} {% display_posts %}</div>
+
 {% endblock %}

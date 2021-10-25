@@ -1,33 +1,43 @@
 {% extends "network/layout.html" %} {% block body %}
 
-<!--Messages-->
-{% if messages %}
-<ul class="messages">
-	{% for message in messages %}
-	<li {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
-		{{ message }}
-	</li>
-	{% endfor %}
-</ul>
-{% endif %}
+<div id="index-page">
+	<!--Messages-->
+	{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+		<li {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+			{{ message }}
+		</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
 
-<!--New post form-->
-{% if user.is_authenticated %}
-<div class="new-post-box">
-	<form action="{% url 'post' %}" method="POST">
-		{% csrf_token %}
-		<div>
-			<textarea
-				name="content"
-				rows="2"
-				placeholder="Write your post here..."
-			></textarea>
-		</div>
-		<button type="submit">Post</button>
-	</form>
+	<!-- Write new post section -->
+
+	{% if user.is_authenticated %}
+	<section id="new-post">
+		<form action="{% url 'post' %}" method="POST">
+			{% csrf_token %}
+			<div>
+				<textarea
+					name="content"
+					rows="2"
+					placeholder="Write your post here..."
+				></textarea>
+			</div>
+			<div>
+				<button type="submit">Post</button>
+			</div>
+		</form>
+	</section>
+	{% endif %}
+
+	<!-- Posts section -->
+	<section id="posts">
+		<h1>Explore</h1>
+		{% if not posts_page %}
+		<div>No posts yet.</div>
+		{% else %} {% load inclusiontag %} {% display_posts %} {% endif %}
+	</section>
 </div>
-{% endif %}
-
-<div>{% load inclusiontag %} {% display_posts %}</div>
-
 {% endblock %}

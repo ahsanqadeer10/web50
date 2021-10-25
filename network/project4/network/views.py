@@ -28,6 +28,7 @@ def index(request):
         post.like_count = post.likes.all().count
         if request.user.is_authenticated:
             post.user_likes = request.user in post.likes.all() 
+
     return render(request, "network/index.html", {
         "posts_page": posts_page
     })
@@ -71,9 +72,15 @@ def register(request):
                 "message": "Passwords must match."
             })
 
+        # Get profile picture
+        profile_picture = None
+        if request.FILES:
+            profile_picture = request.FILES["profile-picture"]
+
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
+            user.profile_picture = profile_picture
             user.save()
         except IntegrityError:
             return render(request, "network/register.html", {
@@ -230,10 +237,11 @@ def following(request):
                 return HttpResponse("Page does not exist.")
             else:
                 posts_page = paginator.page(int(request.GET.get("page")))
-    for post in posts_page:
-        post.like_count = post.likes.all().count
-        if request.user.is_authenticated:
-            post.user_likes = request.user in post.likes.all()
+            for post in posts_page:
+                post.like_count = post.likes.all().count
+                if request.user.is_authenticated:
+                    post.user_likes = request.user in post.likes.all()
+    
     return render(request, "network/following.html", {
         "posts_page": posts_page
     })

@@ -3,5 +3,13 @@
 
 <!--block body-->
 {% block body %}
-<div>{% load inclusiontag %} {% display_posts %}</div>
+<div id="following-page">
+	<section id="posts">
+		<h1>Following</h1>
+		{% if not posts_page %}
+		<div>No posts from people you are following.</div>
+		{% else %} {% load inclusiontag %} {% display_posts %} {% endif %}
+	</section>
+</div>
+
 {% endblock %}

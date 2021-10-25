@@ -1,196 +1,553 @@
 body {
   font-family: "Inter", sans-serif;
-  font-size: 15px;
+  font-size: 16px;
+  letter-spacing: -0.25px;
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  outline: none;
 }
 
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
   padding: 5px 10px;
-}
-header > div {
-  display: flex;
-}
-header a {
-  font-weight: 700;
-  letter-spacing: -0.2px;
-  text-shadow: 0.5px 0.5px 1px rgba(15, 76, 92, 0.5);
 }
 header #logo a {
+  font-size: 2em;
+  font-weight: 700;
   color: #0f4c5c;
-  text-decoration: none;
-  font-size: 26px;
 }
-header ul {
-  list-style-type: none;
+header nav {
   display: flex;
-  gap: 5px;
-  margin: 0;
-  padding: 0;
 }
-header ul a {
-  color: rgba(15, 76, 92, 0.5);
-  text-decoration: none;
-  padding: 5px 10px;
-}
-header ul .header-link:hover {
-  color: #0f4c5c;
-}
-header ul .header-link-auth {
-  border: 2px solid rgba(15, 76, 92, 0.5);
+header nav a {
+  padding: 5px 20px;
+  margin: 0px 5px;
   border-radius: 5px;
-}
-header ul .header-link-auth:hover {
-  color: white;
-  background-color: #0f4c5c;
-  box-shadow: 0.5px 0.5px 1px 0.5px rgba(15, 76, 92, 0.5);
-}
-header ul .header-link.active-header-link {
   color: #0f4c5c;
-  border-bottom: 2px solid #0f4c5c;
+  border: 2px solid #0f4c5c;
+  box-shadow: 0px 1px 2px 0.5px rgba(0, 0, 0, 0.2);
+  transition: ease-in-out;
+  transition-duration: 0.2s;
 }
-header ul .header-link-auth.active-header-link {
+header nav a:hover,
+header nav a:focus,
+header nav a.active {
   color: white;
   background-color: #0f4c5c;
-  box-shadow: 0.5px 0.5px 1px 0.5px rgba(15, 76, 92, 0.5);
+  box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.5);
 }
 
 .body {
-  padding: 40px;
+  padding: 50px;
 }
 
-#posts {
+#login-page #login-form {
+  width: 40%;
+  min-width: 400px;
+  margin: 80px auto;
+}
+#login-page #login-form h1 {
+  font-weight: 200;
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  font-size: 3em;
+}
+#login-page #login-form h6 > a {
+  color: #0f4c5c;
+  letter-spacing: 0.1px;
+}
+#login-page #login-form h6 > a:hover {
+  color: black;
+}
+#login-page #login-form form div {
+  margin: 20px 0;
+}
+#login-page #login-form form div input {
+  width: 100%;
+  min-width: 300px;
+  padding: 10px;
+  border: 0.5px solid #0f4c5c;
+  outline: none;
+  box-shadow: 0px 1px 1px 0.5px rgba(0, 0, 0, 0.25);
+}
+#login-page #login-form form div input:focus {
+  border: 2px solid #0f4c5c;
+}
+#login-page #login-form form button {
+  padding: 5px 20px;
+  border: 2px solid #0f4c5c;
+  box-shadow: 0px 1px 1px 0.5px rgba(0, 0, 0, 0.25);
+  color: #0f4c5c;
+  font-weight: 700;
+  background-color: white;
+  transition: ease-in-out;
+  transition-duration: 0.2s;
+}
+#login-page #login-form form button:hover,
+#login-page #login-form form button:focus {
+  border: 2px solid #0f4c5c;
+  background-color: #0f4c5c;
+  box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.25);
+  color: white;
+}
+
+#register-page #register-form {
+  width: 80%;
+  min-width: 400px;
+  margin: 40px auto;
+}
+#register-page #register-form h1 {
+  font-weight: 200;
+  text-shadow: 0px 1px 4px rgba(49, 28, 28, 0.25);
+  font-size: 3em;
+  text-align: center;
+}
+#register-page #register-form h6 {
+  text-align: center;
+}
+#register-page #register-form h6 a {
+  color: #0f4c5c;
+  letter-spacing: 0.1px;
+}
+#register-page #register-form h6 a:hover,
+#register-page #register-form h6 a:focus {
+  color: black;
+}
+#register-page #register-form form {
+  display: flex;
+  flex-wrap: wrap;
+}
+#register-page #register-form form #form-bottom {
+  flex: 100%;
+  text-align: end;
+}
+#register-page #register-form form #form-bottom button {
+  padding: 5px 20px;
+  border: 2px solid #0f4c5c;
+  box-shadow: 0px 1px 1px 0.5px rgba(0, 0, 0, 0.25);
+  color: #0f4c5c;
+  font-weight: 700;
+  background-color: white;
+  transition: ease-in-out;
+  transition-duration: 0.2s;
+}
+#register-page #register-form form #form-bottom button:hover,
+#register-page #register-form form #form-bottom button:focus {
+  border: 2px solid #0f4c5c;
+  background-color: #0f4c5c;
+  box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.25);
+  color: white;
+}
+#register-page #register-form form #form-right {
+  flex: 60%;
+  min-width: 400px;
+}
+#register-page #register-form form #form-right div {
+  margin: 20px 0px;
+}
+#register-page #register-form form #form-right div input {
+  width: 100%;
+  min-width: 300px;
+  padding: 10px;
+  border: 0.5px solid #0f4c5c;
+  outline: none;
+  box-shadow: 0px 1px 1px 0.5px rgba(0, 0, 0, 0.25);
+}
+#register-page #register-form form #form-right div input:focus {
+  border: 2px solid #0f4c5c;
+}
+#register-page #register-form form #form-left {
+  flex: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+#register-page #register-form form #form-left > div {
+  text-align: center;
+}
+#register-page #register-form form #form-left #preview-container {
+  padding: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#register-page #register-form form #form-left #preview-container #preview-image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+#register-page #register-form form #form-left #profile-picture {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+#register-page #register-form form #form-left #profile-picture-label {
+  background-color: rgba(15, 76, 92, 0.5);
+  color: white;
+  font-weight: 700;
+  padding: 5px 10px;
+  box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+#register-page #register-form form #form-left #profile-picture-label:hover,
+#register-page #register-form form #form-left #profile-picture:focus + #profile-picture-label {
+  background-color: #0f4c5c;
+}
+#register-page #register-form form #form-left .remove {
+  display: block;
+  margin: 5px auto;
+  padding: 5px;
+  background-color: #a82231;
+  color: white;
+  font-size: 0.75em;
+  box-shadow: 0px 1px 2px 0.5px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+#register-page #register-form form #form-left .remove:hover,
+#register-page #register-form form #form-left .remove:focus {
+  color: white;
+  font-size: 0.75em;
+  box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.25);
+  opacity: 0.75;
+}
+#register-page #register-form form #form-left,
+#register-page #register-form form #form-right {
+  padding: 20px 10px;
+}
+
+#index-page section,
+#following-page section {
+  width: 50%;
+  margin: 20px 0;
+  min-width: 400px;
+}
+
+#post-cards {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  align-items: center;
-  margin: 20px 0px;
-  padding: 20px 0px;
 }
-#posts .post-card {
-  padding: 10px 0px;
-  width: 60%;
-  box-shadow: 0px 0.5px 5px 0.5px rgba(0, 0, 0, 0.2);
-}
-#posts .post-card > div {
-  padding: 5px 20px;
-}
-#posts .post-card .post-top {
-  font-size: 10px;
-  color: rgba(0, 0, 0, 0.6);
-}
-#posts .post-card .post-top a {
-  color: black;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 18px;
-  margin-right: 10px;
-}
-#posts .post-card .post-top a:hover {
-  color: #0f4c5c;
-}
-#posts .post-card .post-content {
-  letter-spacing: -0.5px;
-}
-#posts .post-card textarea {
-  width: 100%;
-  padding: 10px;
-  outline: none;
-}
-#posts .post-card textarea:focus {
-  border: 1px solid rgba(15, 76, 92, 0.5);
-}
-#posts .post-card .like {
-  border: none;
-  padding: 6px 20px;
-  font-weight: 700;
-  letter-spacing: -0.2px;
-}
-#posts .post-card .like[data-toggle=true] {
+#post-cards .post-card {
   background-color: white;
-  color: #0f4c5c;
   box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.2);
+  padding: 10px 20px;
 }
-#posts .post-card .like[data-toggle=true]:hover {
-  background-color: #0f4c5c;
-  color: white;
-  box-shadow: 0px 1px 4px 0.5px rgba(31, 21, 21, 0.2) inset;
+#post-cards .post-card > div {
+  padding: 5px 0;
 }
-#posts .post-card .like[data-toggle=false] {
-  color: white;
-  background-color: #0f4c5c;
-  box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.2) inset;
+#post-cards .post-card .post-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
 }
-#posts .post-card .like[data-toggle=false]:hover {
-  box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.2);
+#post-cards .post-card .post-top .post-info {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
 }
-#posts .post-card .post-likes {
-  font-size: 14px;
+#post-cards .post-card .post-top .post-info div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
-
-.new-post-box {
+#post-cards .post-card .post-top .post-info div a {
+  font-weight: 700;
+  font-size: 1.25em;
+  transition: ease-in-out;
+  transition-duration: 0.2s;
+}
+#post-cards .post-card .post-top .post-info div a:hover,
+#post-cards .post-card .post-top .post-info div a:focus {
+  color: rgba(15, 76, 92, 0.5);
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+#post-cards .post-card .post-top .post-info div span {
+  font-size: 0.75em;
+}
+#post-cards .post-card .post-top .post-info .profile-picture {
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  height: 60px;
+  width: 60px;
+  padding: 5px;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
-.new-post-box form {
-  padding: 10px;
-  width: 60%;
-  box-shadow: 0.5px 0.5px 5px 0.5px rgba(0, 0, 0, 0.2);
+#post-cards .post-card .post-top .post-info .profile-picture img {
+  max-height: 100%;
+  max-width: 100%;
+  transition: ease-in-out;
+  transition-duration: 0.2s;
 }
-.new-post-box form textarea {
+#post-cards .post-card .post-top .post-info .profile-picture img:hover,
+#post-cards .post-card .post-top .post-info .profile-picture img:focus {
+  max-height: 95%;
+  max-width: 95%;
+}
+#post-cards .post-card .post-top .post-author-buttons {
+  display: flex;
+  gap: 10px;
+}
+#post-cards .post-card .post-top .post-author-buttons button {
+  outline: none;
+  transition: ease-in-out;
+  transition-duration: 0.1s;
+  border: none;
+}
+#post-cards .post-card .post-top .post-author-buttons button:hover,
+#post-cards .post-card .post-top .post-author-buttons button:focus {
+  opacity: 0.5;
+}
+#post-cards .post-card .post-top .post-author-buttons .edit,
+#post-cards .post-card .post-top .post-author-buttons .remove {
+  background: none;
+  padding: 0;
+  font-size: 1.25em;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+}
+#post-cards .post-card .post-top .post-author-buttons .edit i {
+  color: #d6b50f;
+}
+#post-cards .post-card .post-top .post-author-buttons .remove i {
+  color: #a82231;
+}
+#post-cards .post-card .post-top .post-author-buttons .save,
+#post-cards .post-card .post-top .post-author-buttons .cancel {
+  font-size: 0.9em;
+  font-weight: 700;
+  padding: 5px 20px;
+  color: white;
+  box-shadow: 0px 1px 2px 0.5px rgba(0, 0, 0, 0.25);
+}
+#post-cards .post-card .post-top .post-author-buttons .save {
+  background-color: #4f7d56;
+}
+#post-cards .post-card .post-top .post-author-buttons .cancel {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#post-cards .post-card .post-content {
+  margin: 10px 0;
+  white-space: pre-line;
+  transition: ease-in-out;
+  transition-duration: 5s;
+}
+#post-cards .post-card .post-content-edit textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.2);
-  font-size: 0.8em;
-}
-.new-post-box form textarea:focus {
-  border: 1px solid rgba(15, 76, 92, 0.5);
-  box-shadow: 0.5px 0.5px 2px 0.5px rgba(0, 0, 0, 0.5);
-  outline: none;
-}
-.new-post-box form button {
   border: none;
-  float: right;
+  outline: none;
+  resize: none;
+  box-shadow: 0px 1px 2px 0.5px rgba(0, 0, 0, 0.25);
+}
+#post-cards .post-card .post-content-edit textarea:focus {
+  box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.25);
+}
+#post-cards .post-card .post-buttons .like {
+  border: none;
+  outline: none;
   padding: 5px 20px;
+  font-weight: 700;
+  transition: ease-in-out;
+  transition-duration: 0.2s;
+}
+#post-cards .post-card .post-buttons .like[data-toggle=true] {
+  background-color: rgba(15, 76, 92, 0.5);
+  color: white;
+  box-shadow: 0px 1px 1px 0.5px rgba(0, 0, 0, 0.25);
+}
+#post-cards .post-card .post-buttons .like[data-toggle=true]:hover,
+#post-cards .post-card .post-buttons .like[data-toggle=true]:focus,
+#post-cards .post-card .post-buttons .like[data-toggle=false] {
   background-color: #0f4c5c;
   color: white;
-  box-shadow: 0.5px 0.5px 2px 0.5px rgba(15, 76, 92, 0.5);
-  margin-top: 5px;
-  border-radius: 6px;
+  box-shadow: 0px 1px 2px 0.5px rgba(0, 0, 0, 0.25) inset;
 }
-.new-post-box form button:hover {
-  box-shadow: 0.5px 0.5px 5px 0.5px #0f4c5c;
+#post-cards .post-card .post-buttons .like[data-toggle=false]:hover,
+#post-cards .post-card .post-buttons .like[data-toggle=false]:focus {
+  background-color: rgba(15, 76, 92, 0.5);
+  box-shadow: 0px 1px 1px 0.5px rgba(0, 0, 0, 0.25);
+}
+#post-cards .post-card .post-likes {
+  letter-spacing: -0.75px;
+}
+#post-cards .post-card .post-likes i {
+  color: #0f4c5c;
+  font-size: 1.5em;
+}
+
+#posts-pagination {
+  margin: 20px 0px;
+}
+#posts-pagination > span {
+  display: flex;
+  width: fit-content;
+  margin: 0px auto;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  gap: 2px;
+  padding: 2px;
+  box-shadow: 0px 1px 2px 0.5px rgba(0, 0, 0, 0.25);
+}
+#posts-pagination > span > div {
+  display: flex;
+  background-color: white;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 0.1em;
+}
+#posts-pagination > span > div a {
+  padding: 5px 15px;
+  transition: ease-in-out;
+  transition-duration: 0.2s;
+}
+#posts-pagination > span > div a:hover,
+#posts-pagination > span > div a:focus {
+  font-weight: 700;
+  color: #0f4c5c;
+  box-shadow: 0px 1px 2px 0.5px rgba(0, 0, 0, 0.25) inset;
+}
+#posts-pagination > span .current-page {
+  padding: 5px 15px;
+}
+
+#new-post form div {
+  display: flex;
+  margin: 10px 0;
+}
+#new-post form textarea {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  outline: none;
+  resize: none;
+  box-shadow: 0px 1px 2px 0.5px rgba(0, 0, 0, 0.25);
+}
+#new-post form textarea:focus {
+  box-shadow: 0px 1px 4px 0.5px rgba(0, 0, 0, 0.5);
+}
+#new-post form button {
+  padding: 5px 20px;
+  margin-left: auto;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.25);
+  transition: ease-in-out;
+  transition-duration: 0.2s;
+}
+#new-post form button:hover,
+#new-post form button:focus {
+  background-color: #0f4c5c;
+  box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.5);
   transition: ease-in-out;
 }
 
-.profile-card > div {
-  font-weight: 700;
+#profile-page section {
+  margin: 20px 0;
+  min-width: 400px;
 }
-.profile-card .top {
+#profile-page #profile {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
   align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  color: white;
+  background-color: rgba(15, 76, 92, 0.5);
+  border: 1px solid #0f4c5c;
+  box-shadow: 0px 1px 4px 1px #0f4c5c;
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
 }
-.profile-card .top .username {
-  font-size: 34px;
-  text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.5);
-  font-weight: 200;
+#profile-page #profile .username {
+  font-size: 2em;
 }
-.profile-card .top .follow-toggle-box button {
+#profile-page #profile .profile-picture {
+  padding: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+#profile-page #profile .profile-picture img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+#profile-page #profile .follow-toggle-box button {
+  background-color: white;
+  color: #0f4c5c;
+  border: none;
+  padding: 10px 20px;
+  box-shadow: 0px 1px 2px 0.5px rgba(0, 0, 0, 0.25);
+}
+#profile-page #profile .follow-toggle-box button.follow-toggle-true {
   background-color: #0f4c5c;
   color: white;
-  border: none;
-  font-weight: 700;
-  padding: 5px 10px;
-  font-size: 0.8em;
-  box-shadow: 0.5px 0.5px 1px 0.5px rgba(15, 76, 92, 0.5);
-  transition: ease-out 1s;
-  width: 100px;
 }
-.profile-card .top .follow-toggle-box button.follow-toggle-true {
+#profile-page #profile .stats {
+  display: flex;
+  gap: 2px;
+  background-color: white;
+}
+#profile-page #profile .stats div {
   background-color: rgba(15, 76, 92, 0.5);
+  padding: 10px 20px;
+}
+#profile-page #profile .stats div span {
+  font-size: 1.5em;
+  margin: 0px 5px;
+  font-weight: 700;
+}
+#profile-page #posts {
+  width: 50%;
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.fadeout {
+  animation-name: fadeout;
+  animation-duration: 0.1s;
+  animation-iteration-count: 1;
+}
+
+.fadein {
+  animation-name: fadein;
+  animation-duration: 0.1s;
+  animation-iteration-count: 1;
 }
 
 /*# sourceMappingURL=styles.css.map */

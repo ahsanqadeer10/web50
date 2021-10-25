@@ -1,107 +1,131 @@
-<div id="posts">
-	{% for post in posts_page.object_list %}
-	<div class="post-card" data-post_id="{{post.id}}">
+<div id="post-cards">
+	{% for post in posts_page %}
+	<article class="post-card" data-post_id="{{post.id}}">
 		<div class="post-top">
-			<span><a href="{% url 'profile' post.author %}">{{post.author}}</a></span>
-			<span>{{post.created_at}}</span>
-		</div>
-		<div class="post-content">{{post.content}}</div>
-		{% if user.is_authenticated and user.id == post.author.id %}
-		<div class="post-buttons">
-			<button class="edit">Edit</button>
-			<!-- Button trigger modal -->
-			<button
-				type="button"
-				class="remove"
-				data-bs-toggle="modal"
-				data-bs-target="#remove-post-modal"
-			>
-				Remove
-			</button>
+			<div class="post-info">
+				<a class="profile-picture" href="{% url 'profile' post.author %}">
+					<img src="{{post.author.profile_picture_url}}" />
+				</a>
+				<div>
+					<a href="{% url 'profile' post.author %}"> {{post.author}} </a>
+					<span>{{post.created_at}}</span>
+				</div>
+			</div>
 
-			<div
-				class="modal fade"
-				id="remove-post-modal"
-				data-bs-backdrop="static"
-				data-bs-keyboard="false"
-				tabindex="-1"
-				aria-labelledby="remove-post-confirmation"
-				aria-hidden="true"
-			>
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="remove-post-confirmation">Confirm</h5>
-							<button
-								type="button"
-								class="btn-close"
-								data-bs-dismiss="modal"
-								aria-label="Close"
-							></button>
-						</div>
-						<div class="modal-body">
-							Are you sure you want to delete this post?
-						</div>
-						<div class="modal-footer">
-							<button
-								type="button"
-								class="btn btn-secondary"
-								data-bs-dismiss="modal"
-							>
-								No, Cancel.
-							</button>
-							<button id="remove-confirm" type="button" class="btn btn-primary">
-								Yes, Go Ahead.
-							</button>
+			{% if user.is_authenticated and user.id == post.author.id %}
+			<div class="post-author-buttons">
+				<button class="edit"><i class="bi bi-pencil-square"></i></button>
+				<button
+					type="button"
+					class="remove"
+					data-bs-toggle="modal"
+					data-bs-target="#remove-post-modal"
+				>
+					<i class="bi bi-x-square"></i>
+				</button>
+
+				<div
+					class="modal fade"
+					id="remove-post-modal"
+					data-bs-backdrop="static"
+					data-bs-keyboard="false"
+					tabindex="-1"
+					aria-labelledby="remove-post-confirmation"
+					aria-hidden="true"
+				>
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="remove-post-confirmation">
+									Confirm
+								</h5>
+								<button
+									type="button"
+									class="btn-close"
+									data-bs-dismiss="modal"
+									aria-label="Close"
+								></button>
+							</div>
+							<div class="modal-body">
+								Are you sure you want to delete this post?
+							</div>
+							<div class="modal-footer">
+								<button
+									type="button"
+									class="btn btn-secondary"
+									data-bs-dismiss="modal"
+								>
+									No, Cancel.
+								</button>
+								<button
+									id="remove-confirm"
+									type="button"
+									class="btn btn-primary"
+								>
+									Yes, Go Ahead.
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			{% endif %}
 		</div>
-		{% endif %} {% if user.is_authenticated %}
-		<div>
+
+		<div class="post-content">{{post.content}}</div>
+
+		<div class="post-likes">
+			{%if post.like_count > 0%}
+			<i class="bi bi-hand-thumbs-up-fill"></i> Liked by {{post.like_count}}!
+			{%endif%}
+		</div>
+
+		{% if user.is_authenticated %}
+		<div class="post-buttons">
 			{%if post.user_likes%}
-			<button class="like like-false" data-toggle="false">Liked!</button>
+			<button class="like" data-toggle="false">Liked!</button>
 			{%else%}
-			<button class="like like-true" data-toggle="true">Like</button>
+			<button class="like" data-toggle="true">Like</button>
 			{%endif%}
 		</div>
 		{% endif %}
-		<div class="post-likes">
-			{% if post.like_count > 0 %} Liked by {{post.like_count}} {% endif %}
+	</article>
+	{% endfor %}
+</div>
+<div id="posts-pagination">
+	<span>
+		{%if posts_page.has_previous%}
+		<div>
+			<a href="?page=1">First</a>
 		</div>
-	</div>
-	{% endfor %} {% if posts_page.object_list is empty %}
-	<h4>No posts yet...</h4>
-	{% else %}
-	<div aria-label="Page navigation">
-		<span class="pagination">
-			{% if posts_page.has_previous %}
-			<li class="page-item"><a class="page-link" href="?page=1">first</a></li>
-			<li class="page-item">
-				<a class="page-link" href="?page={{posts_page.previous_page_number}}"
-					>previous</a
-				>
-			</li>
-			{% endif %}
+		<!--If previous page is not the first page-->
+		{%if posts_page.previous_page_number != 1%}
+		<div>
+			<a href="?page={{posts_page.previous_page_number}}"
+				>{{posts_page.previous_page_number}}</a
+			>
+		</div>
+		{%endif%} {%endif%}
 
-			<span>
-				Page {{posts_page.number}} of {{posts_page.paginator.num_pages}}
-			</span>
+		<!--Show current page number-->
+		<div class="current-page">
+			Page {{posts_page.number}} of {{posts_page.paginator.num_pages}}
+		</div>
 
-			{% if posts_page.has_next %}
-			<li class="page-item">
-				<a class="page-link" href="?page={{posts_page.next_page_number}}"
-					>next</a
-				>
-			</li>
-			<li class="page-item">
-				<a class="page-link" href="?page={{posts_page.paginator.num_pages}}"
-					>last</a
-				>
-			</li>
-			{% endif %}
-		</span>
-	</div>
-	{%endif%}
+		<!--If not on last page-->
+		{%if posts_page.has_next%}
+		<!--If next page is not the last-->
+		{%if posts_page.next_page_number != posts_page.paginator.num_pages%}
+		<div>
+			<a href="?page={{posts_page.next_page_number}}"
+				>{{posts_page.next_page_number}}</a
+			>
+		</div>
+		{%endif%}
+		<div>
+			<a href="?page={{posts_page.paginator.num_pages}}">Last</a>
+		</div>
+		{% endif %}
+	</span>
+	<!-- If not on first page -->
 </div>

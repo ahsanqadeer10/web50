@@ -46,15 +46,17 @@ document.addEventListener("DOMContentLoaded", function () {
 		on_profile_load();
 	} else if (url_name == "following") {
 		on_following_load();
+	} else if (url_name == "register") {
+		on_register_load();
 	}
 
 	function activate_header_link(url_name) {
-		header_links = document.querySelectorAll(".header-link, .header-link-auth");
-		header_links.forEach((link) => {
+		links = document.querySelectorAll("header nav a");
+		links.forEach((link) => {
 			if (link.dataset["url"] == url_name) {
-				link.classList.add("active-header-link");
+				link.classList.add("active");
 			} else {
-				link.classList.remove("active-header-link");
+				link.classList.remove("active");
 			}
 		});
 	}
@@ -75,6 +77,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function on_following_load() {
 		setup_post_like_mechanism();
+	}
+
+	function on_register_load() {
+		preview_image();
 	}
 });
 
@@ -110,14 +116,14 @@ function setup_post_edit_mechanism() {
 	var post_elem = null;
 	var initial_content = null;
 
-	edit_buttons = document.querySelectorAll(".post-buttons .edit");
+	edit_buttons = document.querySelectorAll(".post-author-buttons .edit");
 	edit_buttons.forEach((edit_button) => {
 		edit_button.onclick = () => {
 			if (editing === true) {
 				console.log(`Something is being edited!`);
 				return;
 			}
-			post_elem = edit_button.parentNode.parentNode;
+			post_elem = edit_button.parentNode.parentNode.parentNode;
 			display_editing_area();
 		};
 	});
@@ -129,17 +135,13 @@ function setup_post_edit_mechanism() {
 		// create text area element
 		textarea = document.createElement("textarea");
 		textarea.value = initial_content;
-		textarea.setAttributes({
-			name: "content",
-		});
 		textarea_elem = document.createElement("div");
+		textarea_elem.classList.add("post-content-edit");
 		textarea_elem.appendChild(textarea);
 
-		// replace content with text area
 		post_elem.replaceChild(textarea_elem, content_elem);
 		auto_resize_textarea();
 		textarea.focus();
-		content_elem.remove();
 
 		// create save and cancel buttons
 		save_button = document.createElement("button");
@@ -152,8 +154,9 @@ function setup_post_edit_mechanism() {
 		cancel_button.onclick = cancel_button_pressed;
 
 		// replace edit with save and cancel buttons
-		post_buttons = post_elem.querySelector(".post-buttons");
+		post_buttons = post_elem.querySelector(".post-author-buttons");
 		post_buttons.querySelector(".edit").hidden = true;
+		post_buttons.querySelector(".remove").hidden = true;
 		post_buttons.appendChild(save_button);
 		post_buttons.appendChild(cancel_button);
 
@@ -211,15 +214,14 @@ function setup_post_edit_mechanism() {
 		content_elem.classList.add("post-content");
 		content_elem.innerText = content;
 
-		// replace textarea with content
-		textarea_elem = post_elem.querySelector("textarea").parentNode;
 		post_elem.replaceChild(content_elem, textarea_elem);
 
 		// replace edit and save buttons with edit button
-		post_buttons = post_elem.querySelector(".post-buttons");
+		post_buttons = post_elem.querySelector(".post-author-buttons");
 		post_buttons.querySelector(".save").remove();
 		post_buttons.querySelector(".cancel").remove();
 		post_buttons.querySelector(".edit").hidden = false;
+		post_buttons.querySelector(".remove").hidden = false;
 
 		editing = false;
 		post_elem = null;
@@ -300,11 +302,14 @@ function setup_post_like_mechanism() {
 			button.dataset["toggle"] = "false";
 			button.innerText = "Liked!";
 		}
+		button.blur();
 	}
 
 	function change_like_count(count) {
 		if (count > 0) {
-			post_elem.querySelector(".post-likes").innerText = "Liked by " + count;
+			post_elem.querySelector(
+				".post-likes"
+			).innerHTML = `<i class="bi bi-hand-thumbs-up-fill"></i> Liked by ${count}!`;
 		} else {
 			post_elem.querySelector(".post-likes").innerText = "";
 		}
@@ -347,5 +352,40 @@ function setup_post_delete_mechanism() {
 					location.reload();
 				}
 			});
+	}
+}
+
+function preview_image() {
+	const default_image_url = "../../../media/images/default-profile-pic.png";
+	var image = document.querySelector("#preview-image");
+	preview_displayed = false;
+
+	document.querySelector("#profile-picture").onchange = function () {
+		if (this.files && this.files[0]) {
+			show_preview(this.files[0]);
+			this.blur();
+		}
+	};
+
+	function show_preview(img_data) {
+		var img_url = URL.createObjectURL(img_data);
+		image.src = img_url;
+
+		if (preview_displayed == false) {
+			remove_image_button = document.createElement("a");
+			remove_image_button.innerHTML = `Remove`;
+			remove_image_button.classList.add("remove");
+			remove_image_button.onclick = remove_image;
+
+			image.parentNode.parentNode.appendChild(remove_image_button);
+
+			preview_displayed = true;
+		}
+	}
+
+	function remove_image() {
+		image.src = default_image_url;
+		preview_displayed = false;
+		image.parentNode.parentNode.querySelector(".remove").remove();
 	}
 }
